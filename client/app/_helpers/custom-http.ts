@@ -5,6 +5,7 @@ import { appConfig } from '../app.config';
 import { Observable } from "rxjs/Observable";
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/observable/throw';
 
 @Injectable()
 export class CustomHttp extends Http {
@@ -44,13 +45,13 @@ export class CustomHttp extends Http {
         return options;
     }
 
-    private handleError(error: Response) {
+    private handleError(error: any) {
         if (error.status === 401) {
             // 401 unauthorized response so log user out of client
             window.location.href = '/login';
         }
 
-        return Observable.throw(error);
+        return Observable.throw(error._body);
     }
 }
 
