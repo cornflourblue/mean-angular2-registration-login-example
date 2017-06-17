@@ -5,8 +5,8 @@ import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { routing } from './app.routing';
-import { AppConfig } from './app.config';
 
+import { customHttpProvider } from './_helpers/index';
 import { AlertComponent } from './_directives/index';
 import { AuthGuard } from './_guards/index';
 import { AlertService, AuthenticationService, UserService } from './_services/index';
@@ -29,7 +29,7 @@ import { RegisterComponent } from './register/index';
         RegisterComponent
     ],
     providers: [
-        AppConfig,
+        customHttpProvider,
         AuthGuard,
         AlertService,
         AuthenticationService,

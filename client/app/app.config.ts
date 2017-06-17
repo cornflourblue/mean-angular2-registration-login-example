@@ -1,3 +1,3 @@
-﻿export class AppConfig {
-    public readonly apiUrl = 'http://localhost:4000';
+﻿export const appConfig = {
+    apiUrl: 'http://localhost:4000'
 };
