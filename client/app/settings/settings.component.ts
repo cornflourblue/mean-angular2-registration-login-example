@@ -1,14 +1,14 @@
 ﻿import { Component, OnInit } from '@angular/core';
 
-import { User, Investor, Accelerator } from '../_models/index';
+import { User } from '../_models/index';
 import { UserService } from '../_services/index';
 
 @Component({
     moduleId: module.id,
-    templateUrl: 'home.component.html'
+    templateUrl: 'settings.component.html'
 })
 
-export class HomeComponent implements OnInit {
+export class SettingsComponent implements OnInit {
     currentUser: User;
     users: User[] = [];
 

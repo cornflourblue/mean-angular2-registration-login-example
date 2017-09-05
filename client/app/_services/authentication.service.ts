@@ -2,6 +2,8 @@
 import { Http, Headers, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { User, Investor, Accelerator } from '../_models/index';
+
 import 'rxjs/add/operator/map'
 
 @Injectable()
@@ -23,6 +25,7 @@ export class AuthenticationService {
                 let user = response.json();
                 if (user && user.token) {
                     // store user details and jwt token in local storage to keep user logged in between page refreshes
+                    console.log(user);
                     localStorage.setItem('currentUser', JSON.stringify(user));
                     this.loggedIn.next(true);
                 }
@@ -33,6 +36,7 @@ export class AuthenticationService {
 
     logout() {
         // remove user from local storage to log user out
+        console.log('logout called');
         localStorage.removeItem('currentUser');
         this.loggedIn.next(false);
     }
