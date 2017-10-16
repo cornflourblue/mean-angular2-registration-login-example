@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-
-import { User } from '../_models/index';
-import { UserService } from '../_services/index';
+import { Component, OnInit, Inject } from '@angular/core';
+import { DOCUMENT } from '@angular/platform-browser';
+import { User, Accelerator } from '../_models/index';
+import { Router } from '@angular/router';
+import { AlertService, UserService } from '../_services/index';
 
 @Component({
     moduleId: module.id,
@@ -9,15 +10,39 @@ import { UserService } from '../_services/index';
 })
 
 export class ProfileSettingsComponent implements OnInit {
+    model: any = {};
+    loading = false;
     currentUser: User;
+    testUser: User;
     users: User[] = [];
 
-    constructor(private userService: UserService) {
+    constructor(@Inject(DOCUMENT) private document: Document,
+                private userService: UserService,
+                private router: Router,
+                private alertService: AlertService) {
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     }
 
     ngOnInit() {
+        this.userService.getById(this.currentUser._id).subscribe(currentUser => { this.currentUser = currentUser; console.log(this.currentUser);});
         this.loadAllUsers();
+    }
+
+    update() {
+        console.log(this.currentUser);
+        
+        this.loading = true;
+        this.userService.update(this.currentUser)
+            .subscribe(
+                data => {
+                    this.alertService.success('Profile updated', true);
+                    this.loading = false;
+                    this.document.body.scrollTop = 0;
+                },
+                error => {
+                    this.alertService.error(error);
+                    this.loading = false;
+                });
     }
 
     deleteUser(_id: string) {

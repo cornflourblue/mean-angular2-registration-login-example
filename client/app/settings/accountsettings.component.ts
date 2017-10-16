@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
 import { User } from '../_models/index';
-import { UserService } from '../_services/index';
+import { Router } from '@angular/router';
+import { AlertService, UserService } from '../_services/index';
 
 @Component({
     moduleId: module.id,
@@ -9,15 +10,33 @@ import { UserService } from '../_services/index';
 })
 
 export class AccountSettingsComponent implements OnInit {
+    model: any = {};
+    loading = false;
     currentUser: User;
     users: User[] = [];
 
-    constructor(private userService: UserService) {
+    constructor(private userService: UserService,
+                private router: Router,
+                private alertService: AlertService) {
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     }
 
     ngOnInit() {
         this.loadAllUsers();
+    }
+
+    update() {
+        this.loading = true;
+        this.userService.update(this.model)
+            .subscribe(
+                data => {
+                    this.alertService.success('Profile updated', true);
+                    this.router.navigate(['/']);
+                },
+                error => {
+                    this.alertService.error(error);
+                    this.loading = false;
+                });
     }
 
     deleteUser(_id: string) {

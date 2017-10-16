@@ -21,6 +21,10 @@ h2 {
   margin-top: 8px;
 }
 
+.navbar, .alert {
+  margin-bottom: 0px;
+}
+
 .menu-heading {
   padding: 8px 10px;
   margin-top: 0;
