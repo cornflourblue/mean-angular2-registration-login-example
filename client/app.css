@@ -48,6 +48,10 @@ h2 {
   flex: 1 1 auto;
 }
 
+.navbar{
+  margin-bottom: 0px;
+}
+
 .body {
   padding-top: 30px;
   padding-bottom: 30px;
