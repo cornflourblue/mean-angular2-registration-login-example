@@ -29,8 +29,6 @@ function authenticate(username, password) {
             deferred.resolve({
                 _id: user._id,
                 username: user.username,
-                firstName: user.firstName,
-                lastName: user.lastName,
                 token: jwt.sign({ sub: user._id }, config.secret)
             });
         } else {
@@ -141,14 +139,31 @@ function update(_id, userParam) {
 
     function updateUser() {
         // fields to update
-        console.log(userParam);
         var set = {
-            firstName: userParam.firstName,
-            lastName: userParam.lastName,
             username: userParam.username,
             orgName: userParam.orgName,
-            location: userParam.location
+            location: userParam.location,
+            founded: userParam.founded,
+            contactName: userParam.contactName,
+            contactTitle: userParam.contactTitle,
+            contactEmail: userParam.contactEmail,
+            contactPhone: userParam.contactPhone,
+            emphasizedIndustries: userParam.emphasizedIndustries,
+            team: userParam.team,
+            cohorts: userParam.cohorts,
+            valueProp: userParam.valueProp,
+            raisingCohort: userParam.raisingCohort,
+            raisingGrads: userParam.raisingGrads,
+            raisingOther: userParam.raisingOther,
+            orgType: userParam.orgType,
+            assetsUnderManagement: userParam.assetsUnderManagement,
+            directInvestProgram: userParam.directInvestProgram,
+            coInvestProgram: userParam.coInvestProgram,
+            affiliates: userParam.affiliates
         };
+
+        //don't store null values
+        clean(set);
 
         // update password if it was entered
         if (userParam.password) {
@@ -166,6 +181,16 @@ function update(_id, userParam) {
     }
 
     return deferred.promise;
+}
+
+function clean(obj) {
+  var propNames = Object.getOwnPropertyNames(obj);
+  for (var i = 0; i < propNames.length; i++) {
+    var propName = propNames[i];
+    if (obj[propName] === null || obj[propName] === undefined) {
+      delete obj[propName];
+    }
+  }
 }
 
 function _delete(_id) {

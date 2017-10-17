@@ -26,10 +26,6 @@ export class Accelerator extends User {
     raisingCohort: boolean;
     raisingGrads: boolean;
     raisingOther: boolean;
-    startupsFunded: number;
-    startupExits: number;
-    exitValue: number;
-    fundingTotal: number;
 
     constructor(username: string, password: string) { super(username, password); }
 }

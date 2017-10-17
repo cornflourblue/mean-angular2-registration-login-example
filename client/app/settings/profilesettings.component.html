@@ -50,75 +50,61 @@
     </div>
   </dd>
 
-  <!--ACCELERATORS--><!--
-  <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !cohorts.valid }">
-    <label for="cohorts">Cohorts</label>
-    <input type="text" class="form-control" name="cohorts" [(ngModel)]="currentUser.cohorts" #ctrl="ngModel">
+  <!--ACCELERATORS-->
+  <div *ngIf="currentUser.type == 'accelerator'">
+    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !cohorts.valid }">
+      <label for="cohorts">Cohorts</label>
+      <input type="text" class="form-control" name="cohorts" [(ngModel)]="currentUser.cohorts" #cohorts="ngModel">
+    </div>
+    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !valueProp.valid }">
+      <label for="valueProp">Value proposition</label>
+      <input type="text" class="form-control" name="valueProp" [(ngModel)]="currentUser.valueProp" #valueProp="ngModel">
+    </div>
+    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !raisingCohort.valid }">
+        <input type="checkbox" name="raisingCohort" [(ngModel)]="currentUser.raisingCohort" #raisingCohort="ngModel">
+        Raising for Cohort
+    </div>
+    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !raisingGrads.valid }">
+        <input type="checkbox" name="raisingGrads" [(ngModel)]="currentUser.raisingGrads" #raisingGrads="ngModel">
+        Raising for Graduates
+    </div>
+    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !raisingOther.valid }">
+        <input type="checkbox" name="raisingOther" [(ngModel)]="currentUser.raisingOther" #raisingOther="ngModel">
+        Raising for Other
+    </div>
   </div>
-  <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !valueProp.valid }">
-    <label for="valueProp">Value proposition</label>
-    <input type="text" class="form-control" name="valueProp" [(ngModel)]="currentUser.valueProp" #ctrl="ngModel">
-  </div>
-  <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !raisingCohort.valid }">
-      <input type="checkbox" name="raisingCohort" [(ngModel)]="currentUser.raisingCohort" #ctrl="ngModel">
-      Raising for Cohort
-  </div>
-  <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !raisingGrads.valid }">
-      <input type="checkbox" name="raisingGrads" [(ngModel)]="currentUser.raisingGrads" #ctrl="ngModel">
-      Raising for Graduates
-  </div>
-  <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !raisingOther.valid }">
-      <input type="checkbox" name="raisingOther" [(ngModel)]="currentUser.raisingOther" #ctrl="ngModel">
-      Raising for Other
-  </div>
-  <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !startupsFunded.valid }">
-    <label for="startupsFunded">Startups funded</label>
-    <input type="text" class="form-control" name="startupsFunded" [(ngModel)]="currentUser.startupsFunded" #ctrl="ngModel">
-  </div>
-  <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !startupExits.valid }">
-    <label for="startupExits">Startup Exits</label>
-    <input type="text" class="form-control" name="startupExits" [(ngModel)]="currentUser.startupExits" #ctrl="ngModel">
-  </div>
-  <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !exitValue.valid }">
-    <label for="exitValue">Exit value</label>
-    <input type="text" class="form-control" name="exitValue" [(ngModel)]="currentUser.exitValue" #ctrl="ngModel">
-  </div>
-  <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !fundingTotal.valid }">
-    <label for="fundingTotal">Funding total</label>
-    <input type="text" class="form-control" name="fundingTotal" [(ngModel)]="currentUser.fundingTotal" #ctrl="ngModel">
-  </div>-->
-
 
   <!--INVESTORS-->
-  <!--
-  <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !orgType.valid }">
-    <label for="orgType">Organization type</label>
-    <input type="text" class="form-control" name="orgType" [(ngModel)]="currentUser.orgType" #ctrl="ngModel">
+  <div *ngIf="currentUser.type == 'investor'">
+    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !orgType.valid }">
+      <label for="orgType">Organization type</label>
+      <input type="text" class="form-control" name="orgType" [(ngModel)]="currentUser.orgType" #orgType="ngModel">
+    </div>
+    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !assetsUnderManagement.valid }">
+      <label for="assetsUnderManagement">Assets under management</label>
+      <input type="text" class="form-control" name="assetsUnderManagement" [(ngModel)]="currentUser.assetsUnderManagement" #assetsUnderManagement="ngModel">
+    </div>
+    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !directInvestProgram.valid }">
+        <input type="checkbox" name="directInvestProgram" [(ngModel)]="currentUser.directInvestProgram" #directInvestProgram="ngModel">
+        Direct investment program
+    </div>
+    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !coInvestProgram.valid }">
+        <input type="checkbox" name="coInvestProgram" [(ngModel)]="currentUser.coInvestProgram" #coInvestProgram="ngModel">
+        Co-investment program
+    </div>
+    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !affiliates.valid }">
+      <label for="affiliates">Affiliates</label>
+      <input type="text" class="form-control" name="affiliates" [(ngModel)]="currentUser.affiliates" #affiliates="ngModel">
+    </div>
+    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !cohorts.valid }">
+      <label for="cohorts">Cohorts</label>
+      <input type="text" class="form-control" name="cohorts" [(ngModel)]="currentUser.cohorts" #cohorts="ngModel">
+    </div>
+    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !valueProp.valid }">
+      <label for="valueProp">Value proposition</label>
+      <input type="text" class="form-control" name="valueProp" [(ngModel)]="currentUser.valueProp" #valueProp="ngModel">
+    </div>
   </div>
-  <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !assetsUnderManagement.valid }">
-    <label for="assetsUnderManagement">Assets under management</label>
-    <input type="text" class="form-control" name="assetsUnderManagement" [(ngModel)]="currentUser.assetsUnderManagement" #ctrl="ngModel">
-  </div>
-  <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !directInvestProgram.valid }">
-      <input type="checkbox" name="directInvestProgram" [(ngModel)]="currentUser.raisingOther" #ctrl="ngModel">
-      Direct investment program
-  </div>
-  <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !coInvestProgram.valid }">
-      <input type="checkbox" name="coInvestProgram" [(ngModel)]="currentUser.coInvestProgram" #ctrl="ngModel">
-      Co-investment program
-  </div>
-  <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !affiliates.valid }">
-    <label for="affiliates">Affiliates</label>
-    <input type="text" class="form-control" name="affiliates" [(ngModel)]="currentUser.affiliates" #ctrl="ngModel">
-  </div>
-  <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !cohorts.valid }">
-    <label for="cohorts">Cohorts</label>
-    <input type="text" class="form-control" name="cohorts" [(ngModel)]="currentUser.cohorts" #ctrl="ngModel">
-  </div>
-  <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !valueProp.valid }">
-    <label for="valueProp">Value proposition</label>
-    <input type="text" class="form-control" name="valueProp" [(ngModel)]="currentUser.valueProp" #ctrl="ngModel">
-  </div>-->
   <div class="form-group">
       <button [disabled]="loading" class="btn btn-primary" type="submit">Update profile</button>
       <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />

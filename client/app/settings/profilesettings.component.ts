@@ -24,7 +24,9 @@ export class ProfileSettingsComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.userService.getById(this.currentUser._id).subscribe(currentUser => { this.currentUser = currentUser; console.log(this.currentUser);});
+        this.userService.getById(this.currentUser._id).subscribe(
+            currentUser => { this.currentUser = currentUser;
+             console.log(this.currentUser);});
         this.loadAllUsers();
     }
 
