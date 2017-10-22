@@ -1,6 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { DOCUMENT } from '@angular/platform-browser';
-import { User, Accelerator } from '../_models/index';
+import { User, Accelerator, TeamMember} from '../_models/index';
 import { Router } from '@angular/router';
 import { AlertService, UserService } from '../_services/index';
 
@@ -12,12 +11,11 @@ import { AlertService, UserService } from '../_services/index';
 export class ProfileSettingsComponent implements OnInit {
     model: any = {};
     loading = false;
-    currentUser: User;
+    currentUser: any;
     testUser: User;
     users: User[] = [];
 
-    constructor(@Inject(DOCUMENT) private document: Document,
-                private userService: UserService,
+    constructor(private userService: UserService,
                 private router: Router,
                 private alertService: AlertService) {
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -25,26 +23,38 @@ export class ProfileSettingsComponent implements OnInit {
 
     ngOnInit() {
         this.userService.getById(this.currentUser._id).subscribe(
-            currentUser => { this.currentUser = currentUser;
-             console.log(this.currentUser);});
+            currentUser => { this.currentUser = currentUser;});
         this.loadAllUsers();
     }
 
-    update() {
-        console.log(this.currentUser);
-        
+    update() {        
         this.loading = true;
         this.userService.update(this.currentUser)
             .subscribe(
                 data => {
                     this.alertService.success('Profile updated', true);
                     this.loading = false;
-                    this.document.body.scrollTop = 0;
+                    window.scrollTo(0, 0);
                 },
                 error => {
                     this.alertService.error(error);
                     this.loading = false;
                 });
+    }
+
+    addTeamMember() {
+        if(!this.currentUser.team){
+            this.currentUser.team = Array<TeamMember>;
+        }
+        let tempMember = new TeamMember();
+        tempMember.firstName = this.model.input_team_firstname;
+        tempMember.lastName = this.model.input_team_lastname;
+        this.currentUser.team.push(tempMember);
+        this.model.input_team_firstname = this.model.input_team_lastname = null;
+    }
+
+    deleteTeamMember(temp: TeamMember){
+        this.currentUser.team = this.currentUser.team.filter(item => item !== temp);
     }
 
     deleteUser(_id: string) {

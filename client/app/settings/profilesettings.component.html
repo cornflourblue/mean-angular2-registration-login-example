@@ -34,10 +34,20 @@
     <label for="emphasizedIndustries">Emphasized industries</label>
     <input type="text" class="form-control" name="emphasizedIndustries" [(ngModel)]="currentUser.emphasizedIndustries" #emphasizedIndustries="ngModel">
   </div>
-  <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !team.valid }">
-    <label for="team">Team</label>
-    <input type="text" class="form-control" name="team" [(ngModel)]="currentUser.team" #team="ngModel">
+  <label>Team Members</label><br/>
+  <div *ngFor="let members of currentUser.team">
+    {{members.firstName}} - {{members.lastName}} - <span (click)="deleteTeamMember(members)">x</span>
   </div>
+  <label>Add Team Members</label>
+  <div class="form-group">
+    <label for="input_team_firstname">First Name</label>
+    <input type="text" class="form-control" name="input_team_firstname" [(ngModel)]="model.input_team_firstname">
+  </div>
+  <div class="form-group">
+    <label for="input_team_lastname">Last Name</label>
+    <input type="text" class="form-control" name="input_team_lastname" [(ngModel)]="model.input_team_lastname">
+  </div>
+  <button [disabled]="loading" (click)="addTeamMember()" class="btn btn-primary" type="button">Add {{model.input_team_firstname}} {{model.input_team_lastname}}</button>
   <dt><label for="upload-logo">Logo</label></dt>
   <dd>
     <img height="200" width="200">

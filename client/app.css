@@ -48,6 +48,15 @@ h2 {
   flex: 1 1 auto;
 }
 
+.Subtext-heading {
+  padding-bottom: 8px;
+  font-size: 18px;
+  font-weight: normal;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1 1 auto;
+  flex: 1 1 auto;
+}
+
 .navbar{
   margin-bottom: 0px;
 }
@@ -251,4 +260,8 @@ h2 {
 
 .mr-2 {
     margin-right: 8px !important;
+}
+
+label{
+  margin-top: 5px;
 }
