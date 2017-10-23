@@ -47,10 +47,13 @@ export class ProfileSettingsComponent implements OnInit {
             this.currentUser.team = Array<TeamMember>;
         }
         let tempMember = new TeamMember();
-        tempMember.firstName = this.model.input_team_firstname;
-        tempMember.lastName = this.model.input_team_lastname;
+        tempMember.firstName = this.model.input_member_firstname;
+        tempMember.lastName = this.model.input_member_lastname;
+        tempMember.description = this.model.input_member_description;
+        tempMember.linkedInURL = this.model.input_member_linkedInURL;
         this.currentUser.team.push(tempMember);
-        this.model.input_team_firstname = this.model.input_team_lastname = null;
+        this.model.input_member_firstname = this.model.input_member_lastname = 
+            this.model.input_member_description = this.model.input_member_linkedInURL = null;
     }
 
     deleteTeamMember(temp: TeamMember){

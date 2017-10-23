@@ -1,5 +1,5 @@
 <div class="Subhead mt-0 mb-0">
-  <h2 class="Subhead-heading">Public profile</h2>
+  <h2 class="Subhead-heading">Profile Information</h2>
 </div>
 <form name="form" (ngSubmit)="f.form.valid && update()" #f="ngForm" novalidate>
   <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !orgName.valid }">
@@ -34,23 +34,21 @@
     <label for="emphasizedIndustries">Emphasized industries</label>
     <input type="text" class="form-control" name="emphasizedIndustries" [(ngModel)]="currentUser.emphasizedIndustries" #emphasizedIndustries="ngModel">
   </div>
-  <label>Team Members</label><br/>
-  <div *ngFor="let members of currentUser.team">
-    {{members.firstName}} - {{members.lastName}} - <span (click)="deleteTeamMember(members)">x</span>
+  <!--Investor Specific Fields-->
+  <div *ngIf="currentUser.type == 'investor'">
+    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !orgType.valid }">
+      <label for="orgType">Organization type</label>
+      <input type="text" class="form-control" name="orgType" [(ngModel)]="currentUser.orgType" #orgType="ngModel">
+    </div>
+    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !affiliates.valid }">
+      <label for="affiliates">Affiliates</label>
+      <input type="text" class="form-control" name="affiliates" [(ngModel)]="currentUser.affiliates" #affiliates="ngModel">
+    </div>
   </div>
-  <label>Add Team Members</label>
-  <div class="form-group">
-    <label for="input_team_firstname">First Name</label>
-    <input type="text" class="form-control" name="input_team_firstname" [(ngModel)]="model.input_team_firstname">
-  </div>
-  <div class="form-group">
-    <label for="input_team_lastname">Last Name</label>
-    <input type="text" class="form-control" name="input_team_lastname" [(ngModel)]="model.input_team_lastname">
-  </div>
-  <button [disabled]="loading" (click)="addTeamMember()" class="btn btn-primary" type="button">Add {{model.input_team_firstname}} {{model.input_team_lastname}}</button>
+  <!--End Investor Specific Fields-->
   <dt><label for="upload-logo">Logo</label></dt>
   <dd>
-    <img height="200" width="200">
+    <img height="200" width="200" src="http://eadb.org/wp-content/uploads/2015/08/profile-placeholder.jpg">
     <div class="avatar-upload">
       <label class="position-relative btn button-change-avatar mt-3 width-full text-center">
         Upload new logo
@@ -59,12 +57,43 @@
 
     </div>
   </dd>
+<div class="Subhead Subhead--spacious">
+  <h2 class="Subhead-heading">Team Members</h2>
+</div>
+  <div class="team_members">
+    <div *ngFor="let members of currentUser.team" class="member">
+      <img class="member_photo" src="http://eadb.org/wp-content/uploads/2015/08/profile-placeholder.jpg"/>
+      <div class="member_name"><a href="{{members.linkedInURL}}" target="_blank">{{members.firstName}} {{members.lastName}}</a></div>
+      <div class="member_description">{{members.description}}</div>
+      <div class="member_buttons">
+        <a (click)="deleteTeamMember(members)">delete</a>
+      </div>
+      
+    </div>
+  </div>
+  <label>Add Team Members</label>
+  <div class="form-group">
+    <label for="input_member_firstname">First Name</label>
+    <input type="text" class="form-control" name="input_member_firstname" [(ngModel)]="model.input_member_firstname">
+  </div>
+  <div class="form-group">
+    <label for="input_member_lastname">Last Name</label>
+    <input type="text" class="form-control" name="input_member_lastname" [(ngModel)]="model.input_member_lastname">
+  </div>
+  <div class="form-group">
+    <label for="input_member_description">Description</label>
+    <input type="text" class="form-control" name="input_member_description" [(ngModel)]="model.input_member_description">
+  </div>
+  <div class="form-group">
+    <label for="input_member_linkedInURL">LinkedIn URL</label>
+    <input type="text" class="form-control" name="input_member_linkedInURL" [(ngModel)]="model.input_member_linkedInURL">
+  </div>
+  <button [disabled]="loading" (click)="addTeamMember()" class="btn btn-primary" type="button">Add {{model.input_member_firstname}} {{model.input_member_lastname}}</button>
 
   <!--ACCELERATORS-->
   <div *ngIf="currentUser.type == 'accelerator'">
-    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !cohorts.valid }">
-      <label for="cohorts">Cohorts</label>
-      <input type="text" class="form-control" name="cohorts" [(ngModel)]="currentUser.cohorts" #cohorts="ngModel">
+    <div class="Subhead Subhead--spacious">
+      <h2 class="Subhead-heading">Fund Information</h2>
     </div>
     <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !valueProp.valid }">
       <label for="valueProp">Value proposition</label>
@@ -86,9 +115,12 @@
 
   <!--INVESTORS-->
   <div *ngIf="currentUser.type == 'investor'">
-    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !orgType.valid }">
-      <label for="orgType">Organization type</label>
-      <input type="text" class="form-control" name="orgType" [(ngModel)]="currentUser.orgType" #orgType="ngModel">
+    <div class="Subhead Subhead--spacious">
+      <h2 class="Subhead-heading">Investment Information</h2>
+    </div>
+    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !valueProp.valid }">
+      <label for="valueProp">Value proposition</label>
+      <input type="text" class="form-control" name="valueProp" [(ngModel)]="currentUser.valueProp" #valueProp="ngModel">
     </div>
     <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !assetsUnderManagement.valid }">
       <label for="assetsUnderManagement">Assets under management</label>
@@ -102,19 +134,14 @@
         <input type="checkbox" name="coInvestProgram" [(ngModel)]="currentUser.coInvestProgram" #coInvestProgram="ngModel">
         Co-investment program
     </div>
-    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !affiliates.valid }">
-      <label for="affiliates">Affiliates</label>
-      <input type="text" class="form-control" name="affiliates" [(ngModel)]="currentUser.affiliates" #affiliates="ngModel">
-    </div>
-    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !cohorts.valid }">
-      <label for="cohorts">Cohorts</label>
-      <input type="text" class="form-control" name="cohorts" [(ngModel)]="currentUser.cohorts" #cohorts="ngModel">
-    </div>
-    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !valueProp.valid }">
-      <label for="valueProp">Value proposition</label>
-      <input type="text" class="form-control" name="valueProp" [(ngModel)]="currentUser.valueProp" #valueProp="ngModel">
-    </div>
   </div>
+
+  <!--Investor / Accelerator Shared cohort submission form-->
+  <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !cohorts.valid }">
+    <label for="cohorts">Cohorts</label>
+    <input type="text" class="form-control" name="cohorts" [(ngModel)]="currentUser.cohorts" #cohorts="ngModel">
+  </div>
+
   <div class="form-group">
       <button [disabled]="loading" class="btn btn-primary" type="submit">Update profile</button>
       <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
