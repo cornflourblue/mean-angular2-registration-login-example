@@ -20,7 +20,7 @@ export class Accelerator extends User {
     contactPhone: string;
     emphasizedIndustries: string[];
     team: Array<TeamMember> = [];
-	
+
     cohorts: Array<Cohort> = [];
     valueProp: string;
     raisingCohort: boolean;

@@ -6,6 +6,9 @@ import { SettingsComponent, ProfileSettingsComponent, AccountSettingsComponent} 
 import { LoginComponent } from './login/index';
 import { RegisterComponent, RegisterAcceleratorComponent } from './register/index';
 import { AuthGuard } from './_guards/index';
+import { AdminInviteComponent } from './adminInvite/index';
+import { UserManagementComponent } from './userManagement/index';
+
 
 const appRoutes: Routes = [
     { path: '', component: HomeComponent, canActivate: [AuthGuard] },
@@ -14,12 +17,15 @@ const appRoutes: Routes = [
 		children: [
 			{ path: '', redirectTo: 'profile', pathMatch:'full' },
 			{ path: 'profile', component: ProfileSettingsComponent},
-			{ path: 'account', component: AccountSettingsComponent}		
+			{ path: 'account', component: AccountSettingsComponent}
 		]
 	},
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
     { path: 'register/accelerator', component: RegisterAcceleratorComponent },
+    { path: 'adminInvite', component: AdminInviteComponent },
+    { path: 'userManagement', component: UserManagementComponent },
+
 
     // otherwise redirect to home
     { path: '**', redirectTo: '' }

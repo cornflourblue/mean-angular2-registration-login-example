@@ -26,4 +26,8 @@ export class UserService {
     delete(_id: string) {
         return this.http.delete('/users/' + _id);
     }
+
+    getCurrentUser(){
+        return JSON.parse(localStorage.getItem('currentUser'));
+    }
 }

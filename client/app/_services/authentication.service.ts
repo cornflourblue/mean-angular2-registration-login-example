@@ -30,6 +30,7 @@ export class AuthenticationService {
                     this.loggedIn.next(true);
                 }
 
+
                 return user;
             });
     }

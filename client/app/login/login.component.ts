@@ -32,7 +32,11 @@ export class LoginComponent implements OnInit {
         this.authenticationService.login(this.model.username, this.model.password)
             .subscribe(
                 data => {
-                    this.router.navigate([this.returnUrl]);
+                    // if(this.model.type == "admin"){
+                    //   this.router.navigate(['/admin']);
+                    // } else {
+                      this.router.navigate([this.returnUrl]);
+
                 },
                 error => {
                     this.alertService.error(error);

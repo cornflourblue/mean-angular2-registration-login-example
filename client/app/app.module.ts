@@ -15,6 +15,10 @@ import { SettingsComponent, ProfileSettingsComponent, AccountSettingsComponent} 
 import { AccountComponent } from './account/index';
 import { LoginComponent } from './login/index';
 import { RegisterComponent, RegisterAcceleratorComponent } from './register/index';
+import { AdminInviteComponent } from './adminInvite/index';
+import { UserManagementComponent } from './userManagement/index';
+
+
 
 @NgModule({
     imports: [
@@ -33,7 +37,9 @@ import { RegisterComponent, RegisterAcceleratorComponent } from './register/inde
         AccountComponent,
         LoginComponent,
         RegisterComponent,
-        RegisterAcceleratorComponent
+        RegisterAcceleratorComponent,
+        AdminInviteComponent,
+        UserManagementComponent
     ],
     providers: [
         customHttpProvider,
