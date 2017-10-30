@@ -44,7 +44,7 @@ export class ProfileSettingsComponent implements OnInit {
 
     addTeamMember() {
         if(!this.currentUser.team){
-            this.currentUser.team = Array<TeamMember>;
+            this.currentUser.team =  Array<TeamMember>();
         }
         let tempMember = new TeamMember();
         tempMember.firstName = this.model.input_member_firstname;
@@ -57,7 +57,7 @@ export class ProfileSettingsComponent implements OnInit {
     }
 
     deleteTeamMember(temp: TeamMember){
-        this.currentUser.team = this.currentUser.team.filter(item => item !== temp);
+        this.currentUser.team = this.currentUser.team.filter((item: TeamMember) => item !== temp);
     }
 
     deleteUser(_id: string) {
