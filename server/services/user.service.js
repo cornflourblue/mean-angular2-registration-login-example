@@ -75,22 +75,30 @@ function getById(_id) {
     return deferred.promise;
 }
 
-function create(userParam) {
+function create(caller, userParam) {
     var deferred = Q.defer();
-
-    // validation
-    db.users.findOne(
-        { username: userParam.username },
-        function (err, user) {
+    if (caller === null || caller === undefined || caller.sub === null || caller.sub === undefined) {
+	    deferred.reject("User is not authenticated.");
+    } else {
+        // validation
+        db.users.findById(caller.sub, function (err, userObj) {
             if (err) deferred.reject(err.name + ': ' + err.message);
 
-            if (user) {
-                // username already exists
-                deferred.reject('Username "' + userParam.username + '" is already taken');
-            } else {
-                createUser();
-            }
+            if (userObj.type != "admin") deferred.reject("Only an admin can create an account.");
+            db.users.findOne(
+                { username: userParam.username },
+                function (err, user) {
+                    if (err) deferred.reject(err.name + ': ' + err.message);
+
+                    if (user) {
+                        // username already exists
+                        deferred.reject('Username "' + userParam.username + '" is already taken');
+                    } else {
+                        createUser();
+                    }
+            });
         });
+    }
 
     function createUser() {
         // set user object to userParam without the cleartext password
@@ -195,7 +203,9 @@ function clean(obj) {
 
 function _delete(user, _id) {
     var deferred = Q.defer();
-
+    if (user === null || user === undefined || user.sub === null || user.sub === undefined) {
+	    deferred.reject("User is not authenticated.");
+    }
     // Authenticate calling user and remove target user
     db.users.findById(user.sub, function (err, userObj) {
         if (err) deferred.reject(err.name + ': ' + err.message);
