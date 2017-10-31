@@ -89,7 +89,7 @@ function update(req, res) {
 }
 
 function _delete(req, res) {
-    userService.delete(req.params._id)
+    userService.delete(req.user, req.params._id)
         .then(function () {
             res.sendStatus(200);
         })

@@ -39,8 +39,8 @@ export class AccountSettingsComponent implements OnInit {
                 });
     }
 
-    deleteUser(_id: string) {
-        this.userService.delete(_id).subscribe(() => { this.loadAllUsers() });
+    deleteUser(user: User, _id: string) {
+        this.userService.delete(user, _id).subscribe(() => { this.loadAllUsers() });
     }
 
     private loadAllUsers() {

@@ -193,16 +193,23 @@ function clean(obj) {
   }
 }
 
-function _delete(_id) {
+function _delete(user, _id) {
     var deferred = Q.defer();
 
-    db.users.remove(
-        { _id: mongo.helper.toObjectID(_id) },
-        function (err) {
-            if (err) deferred.reject(err.name + ': ' + err.message);
-
-            deferred.resolve();
-        });
+    // Authenticate calling user and remove target user
+    db.users.findById(user.sub, function (err, userObj) {
+        if (err) deferred.reject(err.name + ': ' + err.message);
+        if (user.sub === _id || userObj.type === "admin" ) {
+            db.users.remove(
+                { _id: mongo.helper.toObjectID(_id) },
+                function (err) {
+                    if (err) deferred.reject(err.name + ': ' + err.message);
+                    deferred.resolve();
+                });
+        } else {
+            deferred.reject("You do not have permission to delete this user.");
+        }
+    });
 
     return deferred.promise;
 }
