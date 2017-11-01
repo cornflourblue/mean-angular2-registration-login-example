@@ -14,7 +14,6 @@ export class ProfileSettingsComponent implements OnInit {
     currentUser: any;
     testUser: User;
     users: User[] = [];
-    addCompanyFormOpen: boolean = false;
     addTeamFormOpen: boolean = false;
     addCohortFormOpen: boolean = false;
 
@@ -28,7 +27,12 @@ export class ProfileSettingsComponent implements OnInit {
         this.userService.getById(this.currentUser._id).subscribe(
             currentUser => {
                 this.currentUser = currentUser;
-                console.log(this.currentUser);
+                if(this.currentUser.cohorts){
+                    for (let cohort of this.currentUser.cohorts) {
+                        cohort.addCompanyFormOpen = false;
+                    }
+                }
+                
             });
     }
 
@@ -62,20 +66,22 @@ export class ProfileSettingsComponent implements OnInit {
         this.addCohortFormOpen = false;
     }
 
-    addCompany(cohort: Cohort) {
+    addCompany(cohort: any) {
+        console.log(cohort);
         let index = this.currentUser.cohorts.indexOf(cohort);
+        console.log(index);
         let company = new Company();
-        company.name = this.model.input_company_name;
-        company.location = this.model.input_company_location;
-        company.date = this.model.input_company_date;
-        company.url = this.model.input_company_url;
-        company.exitValue = this.model.input_company_exit_value;
-        company.fundingTotal = this.model.input_company_funding_total;
+        company.name = cohort.input_company_name;
+        company.location = cohort.input_company_location;
+        company.date = cohort.input_company_date;
+        company.url = cohort.input_company_url;
+        company.exitValue = cohort.input_company_exit_value;
+        company.fundingTotal = cohort.input_company_funding_total;
         this.currentUser.cohorts[index].companies.push(company);
-        this.model.input_company_name = this.model.input_company_location = this.model.input_company_date
-             = this.model.input_company_url = this.model.input_company_exit_value
-             = this.model.input_company_funding_total = null;
-        this.addCompanyFormOpen = false;
+        cohort.input_company_name = cohort.input_company_location = cohort.input_company_date
+             = cohort.input_company_url = cohort.input_company_exit_value
+             = cohort.input_company_funding_total = null;
+        cohort.addCompanyFormOpen = false;
     }
 
     addTeamMember() {

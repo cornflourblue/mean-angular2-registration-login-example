@@ -149,7 +149,7 @@
         <td>Date</td>
       </tr>
     </thead>
-    <tbody *ngFor="let cohort of currentUser.cohorts" class="cohort">
+    <tbody *ngFor="let cohort of currentUser.cohorts; let i = index;" class="cohort">
       <tr class="bg-primary">
         <td>{{cohort.name}}</td>
         <td>{{cohort.location}}</td>
@@ -181,31 +181,31 @@
             </tbody>
           </table>
 
-          <label><a (click)="addCompanyFormOpen = !addCompanyFormOpen">+ Add Company</a></label>
-            <div [hidden]="!addCompanyFormOpen">
+          <label><a (click)="cohort.addCompanyFormOpen = !cohort.addCompanyFormOpen">+ Add Company</a></label>
+            <div [hidden]="!cohort.addCompanyFormOpen">
               <div class="form-group">
                 <label for="input_company_name">Name</label>
-                <input type="text" class="form-control" name="input_company_name" [(ngModel)]="model.input_company_name">
+                <input type="text" class="form-control" name="input_company_name" [(ngModel)]="cohort.input_company_name">
               </div>
               <div class="form-group">
                 <label for="input_company_location">Location</label>
-                <input type="text" class="form-control" name="input_company_location" [(ngModel)]="model.input_company_location">
+                <input type="text" class="form-control" name="input_company_location" [(ngModel)]="cohort.input_company_location">
               </div>
               <div class="form-group">
                 <label for="input_company_date">Date</label>
-                <input type="text" class="form-control" name="input_company_date" [(ngModel)]="model.input_company_date">
+                <input type="text" class="form-control" name="input_company_date" [(ngModel)]="cohort.input_company_date">
               </div>
               <div class="form-group">
                 <label for="input_company_url">URL</label>
-                <input type="text" class="form-control" name="input_company_url" [(ngModel)]="model.input_company_url">
+                <input type="text" class="form-control" name="input_company_url" [(ngModel)]="cohort.input_company_url">
               </div>
               <div class="form-group">
                 <label for="input_company_exit_value">Exit Value</label>
-                <input type="text" class="form-control" name="input_company_exit_value" [(ngModel)]="model.input_company_exit_value">
+                <input type="text" class="form-control" name="input_company_exit_value" [(ngModel)]="cohort.input_company_exit_value">
               </div>
               <div class="form-group">
                 <label for="input_company_funding_total">Funding Total</label>
-                <input type="text" class="form-control" name="input_company_funding_total" [(ngModel)]="model.input_company_funding_total">
+                <input type="text" class="form-control" name="input_company_funding_total" [(ngModel)]="cohort.input_company_funding_total">
               </div>
               <button [disabled]="loading" (click)="addCompany(cohort)" class="btn btn-primary" type="button">Add Company</button>
             </div>
