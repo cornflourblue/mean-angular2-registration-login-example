@@ -68,7 +68,7 @@
       <div class="member_buttons">
         <a (click)="deleteTeamMember(members)">delete</a>
       </div>
-      
+
     </div>
   </div>
   <label><a (click)="addTeamFormOpen = !addTeamFormOpen">+ Add Team Members</a></label>
@@ -139,53 +139,82 @@
   </div>
 
   <!--Investor / Accelerator Shared cohort submission form-->
-  
-  <div class="cohorts">
-    <label>Cohorts</label>
-    <div *ngFor="let cohort of currentUser.cohorts" class="cohort">
-      <div>{{cohort.name}}</div>
-      <div>{{cohort.location}}</div>
-      <div>{{cohort.date}}</div>
-      <div>Cohort Companies</div>
-      <div *ngFor="let company of cohort.companies" class="company">
-        <div>{{company.name}}</div>
-        <div>{{company.location}}</div>
-        <div>{{company.date}}</div>
-        <div>{{company.url}}</div>
-        <div>{{company.exitValue}}</div>
-        <div>{{company.fundingTotal}}</div>
-      </div>
-      <label><a (click)="addCompanyFormOpen = !addCompanyFormOpen">+ Add Company</a></label>
-        <div [hidden]="!addCompanyFormOpen">
-          <div class="form-group">
-            <label for="input_company_name">Name</label>
-            <input type="text" class="form-control" name="input_company_name" [(ngModel)]="model.input_company_name">
-          </div>
-          <div class="form-group">
-            <label for="input_company_location">Location</label>
-            <input type="text" class="form-control" name="input_company_location" [(ngModel)]="model.input_company_location">
-          </div>
-          <div class="form-group">
-            <label for="input_company_date">Date</label>
-            <input type="text" class="form-control" name="input_company_date" [(ngModel)]="model.input_company_date">
-          </div>
-          <div class="form-group">
-            <label for="input_company_url">URL</label>
-            <input type="text" class="form-control" name="input_company_url" [(ngModel)]="model.input_company_url">
-          </div>
-          <div class="form-group">
-            <label for="input_company_exit_value">Exit Value</label>
-            <input type="text" class="form-control" name="input_company_exit_value" [(ngModel)]="model.input_company_exit_value">
-          </div>
-          <div class="form-group">
-            <label for="input_company_funding_total">Funding Total</label>
-            <input type="text" class="form-control" name="input_company_funding_total" [(ngModel)]="model.input_company_funding_total">
-          </div>
-          <button [disabled]="loading" (click)="addCompany(cohort)" class="btn btn-primary" type="button">Add Company</button>
-        </div>
-    </div>
-  </div>
-  
+
+  <table class="cohorts table table-bordered">
+    <!-- <label>Cohorts</label> -->
+    <thead>
+      <tr>
+        <td>Cohort Name</td>
+        <td>Location</td>
+        <td>Date</td>
+      </tr>
+    </thead>
+    <tbody *ngFor="let cohort of currentUser.cohorts" class="cohort">
+      <tr>
+        <td>{{cohort.name}}</td>
+        <td>{{cohort.location}}</td>
+        <td>{{cohort.date}}</td>
+      </tr>
+      <!-- <div>Cohort Companies</div> -->
+      <tr>
+        <td colspan="3">
+          <table class="table table-striped table-bordered table-hover">
+            <thead>
+              <tr>
+                <td>Company Name</td>
+                <td>Location</td>
+                <td>Date</td>
+                <td>Url</td>
+                <td>exitValue</td>
+                <td>fundingTotal</td>
+              </tr>
+            </thead>
+            <tbody *ngFor="let company of cohort.companies" class="company">
+              <tr>
+                <td>{{company.name}}</td>
+                <td>{{company.location}}</td>
+                <td>{{company.date}}</td>
+                <td>{{company.url}}</td>
+                <td>{{company.exitValue}}</td>
+                <td>{{company.fundingTotal}}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <label><a (click)="addCompanyFormOpen = !addCompanyFormOpen">+ Add Company</a></label>
+            <div [hidden]="!addCompanyFormOpen">
+              <div class="form-group">
+                <label for="input_company_name">Name</label>
+                <input type="text" class="form-control" name="input_company_name" [(ngModel)]="model.input_company_name">
+              </div>
+              <div class="form-group">
+                <label for="input_company_location">Location</label>
+                <input type="text" class="form-control" name="input_company_location" [(ngModel)]="model.input_company_location">
+              </div>
+              <div class="form-group">
+                <label for="input_company_date">Date</label>
+                <input type="text" class="form-control" name="input_company_date" [(ngModel)]="model.input_company_date">
+              </div>
+              <div class="form-group">
+                <label for="input_company_url">URL</label>
+                <input type="text" class="form-control" name="input_company_url" [(ngModel)]="model.input_company_url">
+              </div>
+              <div class="form-group">
+                <label for="input_company_exit_value">Exit Value</label>
+                <input type="text" class="form-control" name="input_company_exit_value" [(ngModel)]="model.input_company_exit_value">
+              </div>
+              <div class="form-group">
+                <label for="input_company_funding_total">Funding Total</label>
+                <input type="text" class="form-control" name="input_company_funding_total" [(ngModel)]="model.input_company_funding_total">
+              </div>
+              <button [disabled]="loading" (click)="addCompany(cohort)" class="btn btn-primary" type="button">Add Company</button>
+            </div>
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+
   <label><label><a (click)="addCohortFormOpen = !addCohortFormOpen">+ Add Cohort</a></label></label>
   <div [hidden]="!addCohortFormOpen">
     <div class="form-group">

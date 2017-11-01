@@ -26,13 +26,13 @@ export class ProfileSettingsComponent implements OnInit {
 
     ngOnInit() {
         this.userService.getById(this.currentUser._id).subscribe(
-            currentUser => { 
+            currentUser => {
                 this.currentUser = currentUser;
                 console.log(this.currentUser);
             });
     }
 
-    update() {        
+    update() {
         this.loading = true;
         this.userService.update(this.currentUser)
             .subscribe(
@@ -57,7 +57,7 @@ export class ProfileSettingsComponent implements OnInit {
         cohort.date = this.model.input_cohort_date;
         cohort.companies = Array<Company>();
         this.currentUser.cohorts.push(cohort);
-        this.model.input_company_name = this.model.input_cohort_location = 
+        this.model.input_cohort_name = this.model.input_cohort_location =
             this.model.input_cohort_date = null;
         this.addCohortFormOpen = false;
     }
@@ -88,7 +88,7 @@ export class ProfileSettingsComponent implements OnInit {
         tempMember.description = this.model.input_member_description;
         tempMember.linkedInURL = this.model.input_member_linkedInURL;
         this.currentUser.team.push(tempMember);
-        this.model.input_member_firstname = this.model.input_member_lastname = 
+        this.model.input_member_firstname = this.model.input_member_lastname =
             this.model.input_member_description = this.model.input_member_linkedInURL = null;
         this.addTeamFormOpen = false;
     }
