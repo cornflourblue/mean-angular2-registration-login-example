@@ -1,5 +1,5 @@
 ﻿<div id="container">
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-default" *ngIf="!atLanding">
       <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
@@ -35,10 +35,10 @@
     </div>
 
     <!--[ footer ] -->
-    <div id="footer">
+    <div id="footer" *ngIf="!atLanding">
       <div class="container">
         <p id="copyright">OmniValley LLC © 2017</p>
       </div>
     </div>
-    <div id="clear" style="clear:both;"></div>
+    <div id="clear" style="clear:both;" *ngIf="!atLanding"></div>
 </div>
