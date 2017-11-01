@@ -9,7 +9,7 @@ import { UserService } from '../_services/index';
 })
 
 export class HomeComponent implements OnInit {
-    currentUser: User;
+    currentUser: any;
     users: User[] = [];
 
     constructor(private userService: UserService) {
@@ -29,10 +29,5 @@ export class HomeComponent implements OnInit {
         this.userService.getAll().subscribe(users => { this.users = users; });
     }
 
-    // isAdmin(user){
-    //   if(user.type == "admin"){
-    //     return true;
-    //     console.log(this.currentUser.type);
-    //   }
-    // }
+  
 }

@@ -1,82 +1,39 @@
+<div class="container">
+
+
 <h1 class="header">User Management</h1>
+
+
 
 <br>
 
 <!-- Accelerator list -->
-<h3 class="header">Gener8tor</h3>
+<h3 class="header"></h3>
 <table class="table">
   <thead>
     <tr>
-      <th>#</th>
       <th>Username</th>
+      <th>Position</th>
       <th>Email</th>
+      <th>Phone</th>
       <th>Delete</th>
     </tr>
   </thead>
 
   <tbody>
     <!-- first user -->
-    <tr>
-      <th scope="row">1</th>
-      <td>gen_admin</td>
-      <td>admin@gener8tor.com</td>
-      <td><button class="btn btn-danger" type="button" name="button">Delete</button></td>
-    </tr>
-    <!-- second user -->
-    <tr>
-      <th scope="row">2</th>
-      <td>oDoyleRules</td>
-      <td>oDoyle@gener8tor.com</td>
-      <td><button class="btn btn-danger" type="button" name="button">Delete</button></td>
-    </tr>
-    <!-- second user -->
-    <tr>
-      <th scope="row">3</th>
-      <td>pam</td>
-      <td>pam@gener8tor.com</td>
-      <td><button class="btn btn-danger" type="button" name="button">Delete</button></td>
+    <tr *ngFor="let user of users">
+        <td>{{user.username}}</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><button class="btn btn-danger" type="button" name="button">Delete</button></td>
     </tr>
   </tbody>
 </table>
 
 
-<!-- Investor list -->
-<h3 class="header">Venture Investors</h3>
-<table class="table">
-  <thead>
-    <tr>
-      <th>#</th>
-      <th>Username</th>
-      <th>Email</th>
-      <th>Delete</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <!-- first user -->
-    <tr>
-      <th scope="row">1</th>
-      <td>venture_admin</td>
-      <td>admin@venture.com</td>
-      <td><button class="btn btn-danger" type="button" name="button">Delete</button></td>
-    </tr>
-    <!-- second user -->
-    <tr>
-      <th scope="row">2</th>
-      <td>tom_jones</td>
-      <td>tom@venture.com</td>
-      <td><button class="btn btn-danger" type="button" name="button">Delete</button></td>
-    </tr>
-    <!-- second user -->
-    <tr>
-      <th scope="row">3</th>
-      <td>jeremy_d</td>
-      <td>jeremy_d@venture.com</td>
-      <td><button class="btn btn-danger" type="button" name="button">Delete</button></td>
-    </tr>
-  </tbody>
-</table>
-
+</div>
 
 
 <router-outlet></router-outlet>

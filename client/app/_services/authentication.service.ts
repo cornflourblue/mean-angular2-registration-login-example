@@ -9,6 +9,7 @@ import 'rxjs/add/operator/map'
 @Injectable()
 export class AuthenticationService {
     loggedIn = new BehaviorSubject<boolean>(false);
+    currentUser: any;
 
     constructor(private http: Http) {
         this.loggedIn.next(!!localStorage.getItem('currentUser'));
@@ -41,4 +42,9 @@ export class AuthenticationService {
         localStorage.removeItem('currentUser');
         this.loggedIn.next(false);
     }
+
+    // isAdmin(){
+    //     this.currentUser = localStorage.getItem('currentUser');
+    //     return this.currentUser.type == "admin";
+    // }
 }

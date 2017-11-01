@@ -11,7 +11,8 @@
           </button>
           <a class="navbar-brand" [routerLink]="['/']">OmniValley</a>
         </div>
-        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Collect the nav links, forms, and other content for toggling
+      *ngIf="user.type == 'admin'" -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav navbar-right">
             <li class="nav-link"><a [routerLink]="['/adminInvite']">Invite</a></li>
@@ -44,3 +45,6 @@
     </div>
     <div id="clear" style="clear:both;"></div>
 </div>
+
+
+<!--  -->
