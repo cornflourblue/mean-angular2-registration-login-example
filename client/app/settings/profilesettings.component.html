@@ -150,7 +150,7 @@
       </tr>
     </thead>
     <tbody *ngFor="let cohort of currentUser.cohorts" class="cohort">
-      <tr>
+      <tr class="bg-primary">
         <td>{{cohort.name}}</td>
         <td>{{cohort.location}}</td>
         <td>{{cohort.date}}</td>
@@ -169,8 +169,8 @@
                 <td>fundingTotal</td>
               </tr>
             </thead>
-            <tbody *ngFor="let company of cohort.companies" class="company">
-              <tr>
+            <tbody>
+              <tr *ngFor="let company of cohort.companies" class="company">
                 <td>{{company.name}}</td>
                 <td>{{company.location}}</td>
                 <td>{{company.date}}</td>
