@@ -28,12 +28,16 @@ export class UserManagementComponent{
 
   deleteUser(_id: string) {
       this.userService.delete(_id).subscribe(() => { this.loadAllUsers() });
+      console.log("user deleted");
+
   }
 
   private loadAllUsers() {
       this.userService.getAll().subscribe(users => { this.users = users; });
 
   }
+
+
 
 
 }
