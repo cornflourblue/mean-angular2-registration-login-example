@@ -14,6 +14,9 @@ export class ProfileSettingsComponent implements OnInit {
     currentUser: any;
     testUser: User;
     users: User[] = [];
+    addCompanyFormOpen: boolean = false;
+    addTeamFormOpen: boolean = false;
+    addCohortFormOpen: boolean = false;
 
     constructor(private userService: UserService,
                 private router: Router,
@@ -56,6 +59,7 @@ export class ProfileSettingsComponent implements OnInit {
         this.currentUser.cohorts.push(cohort);
         this.model.input_company_name = this.model.input_cohort_location = 
             this.model.input_cohort_date = null;
+        this.addCohortFormOpen = false;
     }
 
     addCompany(cohort: Cohort) {
@@ -71,6 +75,7 @@ export class ProfileSettingsComponent implements OnInit {
         this.model.input_company_name = this.model.input_company_location = this.model.input_company_date
              = this.model.input_company_url = this.model.input_company_exit_value
              = this.model.input_company_funding_total = null;
+        this.addCompanyFormOpen = false;
     }
 
     addTeamMember() {
@@ -85,6 +90,7 @@ export class ProfileSettingsComponent implements OnInit {
         this.currentUser.team.push(tempMember);
         this.model.input_member_firstname = this.model.input_member_lastname = 
             this.model.input_member_description = this.model.input_member_linkedInURL = null;
+        this.addTeamFormOpen = false;
     }
 
     deleteTeamMember(temp: TeamMember){
