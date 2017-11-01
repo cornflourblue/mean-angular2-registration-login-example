@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { User, Accelerator, TeamMember} from '../_models/index';
+import { User, Accelerator, TeamMember, Cohort, Company} from '../_models/index';
 import { Router } from '@angular/router';
 import { AlertService, UserService } from '../_services/index';
 
@@ -23,8 +23,10 @@ export class ProfileSettingsComponent implements OnInit {
 
     ngOnInit() {
         this.userService.getById(this.currentUser._id).subscribe(
-            currentUser => { this.currentUser = currentUser;});
-        this.loadAllUsers();
+            currentUser => { 
+                this.currentUser = currentUser;
+                console.log(this.currentUser);
+            });
     }
 
     update() {        
@@ -40,6 +42,35 @@ export class ProfileSettingsComponent implements OnInit {
                     this.alertService.error(error);
                     this.loading = false;
                 });
+    }
+
+    addCohort() {
+        if(!this.currentUser.cohorts){
+            this.currentUser.cohorts =  Array<Cohort>();
+        }
+        let cohort = new Cohort();
+        cohort.name = this.model.input_cohort_name;
+        cohort.location = this.model.input_cohort_location;
+        cohort.date = this.model.input_cohort_date;
+        cohort.companies = Array<Company>();
+        this.currentUser.cohorts.push(cohort);
+        this.model.input_company_name = this.model.input_cohort_location = 
+            this.model.input_cohort_date = null;
+    }
+
+    addCompany(cohort: Cohort) {
+        let index = this.currentUser.cohorts.indexOf(cohort);
+        let company = new Company();
+        company.name = this.model.input_company_name;
+        company.location = this.model.input_company_location;
+        company.date = this.model.input_company_date;
+        company.url = this.model.input_company_url;
+        company.exitValue = this.model.input_company_exit_value;
+        company.fundingTotal = this.model.input_company_funding_total;
+        this.currentUser.cohorts[index].companies.push(company);
+        this.model.input_company_name = this.model.input_company_location = this.model.input_company_date
+             = this.model.input_company_url = this.model.input_company_exit_value
+             = this.model.input_company_funding_total = null;
     }
 
     addTeamMember() {
@@ -60,11 +91,4 @@ export class ProfileSettingsComponent implements OnInit {
         this.currentUser.team = this.currentUser.team.filter((item: TeamMember) => item !== temp);
     }
 
-    deleteUser(_id: string) {
-        this.userService.delete(_id).subscribe(() => { this.loadAllUsers() });
-    }
-
-    private loadAllUsers() {
-        this.userService.getAll().subscribe(users => { this.users = users; });
-    }
 }

@@ -137,10 +137,65 @@
   </div>
 
   <!--Investor / Accelerator Shared cohort submission form-->
-  <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !cohorts.valid }">
-    <label for="cohorts">Cohorts</label>
-    <input type="text" class="form-control" name="cohorts" [(ngModel)]="currentUser.cohorts" #cohorts="ngModel">
+  
+  <div class="cohorts">
+    <label>Cohorts</label>
+    <div *ngFor="let cohort of currentUser.cohorts" class="cohort">
+      <div>{{cohort.name}}</div>
+      <div>{{cohort.location}}</div>
+      <div>{{cohort.date}}</div>
+      <div>Cohort Companies</div>
+      <div *ngFor="let company of cohort.companies" class="company">
+        <div>{{company.name}}</div>
+        <div>{{company.location}}</div>
+        <div>{{company.date}}</div>
+        <div>{{company.url}}</div>
+        <div>{{company.exitValue}}</div>
+        <div>{{company.fundingTotal}}</div>
+      </div>
+      <label>Add Company</label>
+        <div class="form-group">
+          <label for="input_company_name">Name</label>
+          <input type="text" class="form-control" name="input_company_name" [(ngModel)]="model.input_company_name">
+        </div>
+        <div class="form-group">
+          <label for="input_company_location">Location</label>
+          <input type="text" class="form-control" name="input_company_location" [(ngModel)]="model.input_company_location">
+        </div>
+        <div class="form-group">
+          <label for="input_company_date">Date</label>
+          <input type="text" class="form-control" name="input_company_date" [(ngModel)]="model.input_company_date">
+        </div>
+        <div class="form-group">
+          <label for="input_company_url">URL</label>
+          <input type="text" class="form-control" name="input_company_url" [(ngModel)]="model.input_company_url">
+        </div>
+        <div class="form-group">
+          <label for="input_company_exit_value">Exit Value</label>
+          <input type="text" class="form-control" name="input_company_exit_value" [(ngModel)]="model.input_company_exit_value">
+        </div>
+        <div class="form-group">
+          <label for="input_company_funding_total">Funding Total</label>
+          <input type="text" class="form-control" name="input_company_funding_total" [(ngModel)]="model.input_company_funding_total">
+        </div>
+        <button [disabled]="loading" (click)="addCompany(cohort)" class="btn btn-primary" type="button">Add Company</button>
+      </div>
   </div>
+  
+  <label>Add Cohort</label>
+  <div class="form-group">
+    <label for="input_cohort_name">Name</label>
+    <input type="text" class="form-control" name="input_cohort_name" [(ngModel)]="model.input_cohort_name">
+  </div>
+  <div class="form-group">
+    <label for="input_cohort_location">Location</label>
+    <input type="text" class="form-control" name="input_cohort_location" [(ngModel)]="model.input_cohort_location">
+  </div>
+  <div class="form-group">
+    <label for="input_cohort_date">Date</label>
+    <input type="text" class="form-control" name="input_cohort_date" [(ngModel)]="model.input_cohort_date">
+  </div>
+  <button [disabled]="loading" (click)="addCohort()" class="btn btn-primary" type="button">Add Cohort</button>
 
   <div class="form-group">
       <button [disabled]="loading" class="btn btn-primary" type="submit">Update profile</button>
