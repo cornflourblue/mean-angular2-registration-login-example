@@ -21,6 +21,10 @@ h2 {
   margin-top: 8px;
 }
 
+h3 {
+  font-size: 18px;
+}
+
 hr{
     width: 80%;
     border-color: rgba(135,135,135,0.5);
@@ -101,8 +105,9 @@ hr{
 
 .profile{
     border-radius: 50%;
-    width:  100%;
-    height: auto;
+    width:  60%;
+    margin: auto;
+    display: block;
 }
 
 .menu{

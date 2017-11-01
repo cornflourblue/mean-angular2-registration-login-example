@@ -14,6 +14,7 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav navbar-right">
+            <li><a [routerLink]="['/aboutus']" id="about">About Us</a></li>
             <li class="dropdown" [style.display]="loggedIn ? 'block' : 'none'">
               <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account <span class="caret"></span></a>
               <ul class="dropdown-menu">
@@ -23,7 +24,6 @@
                 <li><a [routerLink]="['/login']">Sign out</a></li>
               </ul>
             </li>
-            <li><a [routerLink]="['/aboutus']" id="about">About Us</a></li>
             <li><a [routerLink]="['/login']" [style.display]="!loggedIn ? 'block' : 'none'">Login</a></li>
           </ul>
         </div><!-- /.navbar-collapse -->
