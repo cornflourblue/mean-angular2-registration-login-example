@@ -7,6 +7,8 @@ import { SettingsComponent, ProfileSettingsComponent, AccountSettingsComponent} 
 import { LoginComponent } from './login/index';
 import { RegisterComponent, RegisterAcceleratorComponent } from './register/index';
 import { AuthGuard } from './_guards/index';
+import { AboutUsComponent} from './aboutus/index';
+
 
 const appRoutes: Routes = [
     { path: '', component: HomeComponent, canActivate: [AuthGuard] },
@@ -22,6 +24,7 @@ const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
     { path: 'register/accelerator', component: RegisterAcceleratorComponent },
+    { path: 'aboutus', component: AboutUsComponent},
 
     // otherwise redirect to home
     { path: '**', redirectTo: '' }

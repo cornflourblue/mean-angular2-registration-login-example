@@ -21,6 +21,11 @@ h2 {
   margin-top: 8px;
 }
 
+hr{
+    width: 80%;
+    border-color: rgba(135,135,135,0.5);
+}
+
 .navbar, .alert {
   margin-bottom: 0px;
 }
@@ -78,6 +83,26 @@ h2 {
   overflow: auto;
   clear: both;
   min-height: 100%;
+}
+
+#container {
+  position: relative;
+  overflow: auto;
+  clear: both;
+  min-height: 100%;
+}
+
+.col-md-3{
+    border-radius: 9px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px 0px;
+    background-color: rgb(255, 255, 255);
+    margin: 20px;
+}
+
+.profile{
+    border-radius: 50%;
+    width:  100%;
+    height: auto;
 }
 
 .menu{
