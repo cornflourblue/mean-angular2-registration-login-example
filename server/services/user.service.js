@@ -4,6 +4,7 @@ var jwt = require('jsonwebtoken');
 var bcrypt = require('bcryptjs');
 var Q = require('q');
 var mongo = require('mongoskin');
+var nodemailer = require('nodemailer');
 var db = mongo.db(config.connectionString, { native_parser: true });
 db.bind('users');
 
@@ -15,8 +16,12 @@ service.getById = getById;
 service.create = create;
 service.update = update;
 service.delete = _delete;
+service.invite = invite;
 
 module.exports = service;
+
+var myEmailAddr = "emailaddress@gmail.com"; // FIXME
+var myEmailPass = "this_is_a_password"; // FIXME
 
 function authenticate(username, password) {
     var deferred = Q.defer();
@@ -115,6 +120,91 @@ function create(caller, userParam) {
                 deferred.resolve();
             });
     }
+
+    return deferred.promise;
+}
+
+function invite(userParam) {
+	var deferred = Q.defer();
+	user = userParam;
+	if (user.email === null || user.email === undefined || user.email === "") {
+		deferred.reject("Email must be supplied for invitations");
+	} else {
+
+            db.users.findOne(
+                { email: user.email },
+                function (err, foundUser) {
+                    if (err) deferred.reject(err.name + ': ' + err.message);
+                    if (foundUser) {
+                        // username already exists
+                        deferred.reject('Email address "' + user.email + '" is already in use');
+                    } else {
+                        createUser();
+                    }
+            });
+	}
+
+	function createUser() {
+	    user.username = "";
+            user.hash = "";
+	    user.lastToken = jwt.sign({payload: user.email}, config.secret);
+            db.users.insert(
+                user,
+                function (err, doc) {
+                    if (err) deferred.reject(err.name + ': ' + err.message);
+            });
+
+            var transporter = nodemailer.createTransport({
+            	  service: 'gmail',
+            	  auth: {
+            		      user: myEmailAddr,
+            		      pass: myEmailPass
+                      }
+            });
+            
+            var mailOptions = {
+            	  from: myEmailAddr,
+            	  to: user.email,
+                  subject: 'Invitation to OmniValley',
+                  text: 'Click the link below to register your account:\nhttp://omnivalley.com/register?token=' + user.lastToken
+            };
+            
+            transporter.sendMail(mailOptions, function(error, info){
+            	  if (error) {
+	              deferred.reject("Error sending email: " + error);
+//            	      console.log(error);
+            	  } else {
+//                      console.log('Email sent: ' + info.response);
+                      deferred.resolve();
+	          }
+             });
+	}
+	return deferred.promise;
+}
+
+function register(token, userParams) {
+    var deferred = Q.defer();
+    try {
+        var decodedEmail = jwt.verify(token, config.secret);
+    } catch (e) {
+        deferred.reject("Bad token");
+    }
+
+    db.users.findOne(
+	{ email: decodedEmail, lastToken: token},
+	function (err, user) {
+	    if (err) deferred.reject(err.name + ': ' + err.message);
+	    if (!foundUser) {
+		// username already exists
+		deferred.reject("Token not found as lastToken in database for any user.");
+	    } else {
+		update(user._id, userParams).then( function(){
+			deferred.resolve();
+		}).catch(function(err) {
+			deferred.reject("Updating user failed");
+		});
+	    }
+    });
 
     return deferred.promise;
 }

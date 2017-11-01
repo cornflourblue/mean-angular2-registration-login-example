@@ -5,11 +5,13 @@ var userService = require('services/user.service');
 
 // routes
 router.post('/authenticate', authenticate);
-router.post('/register', register);
+router.post('/register', register); // Really 'create'
 router.get('/', getAll);
 router.get('/current', getCurrent);
 router.get('/:_id', getId);
 router.put('/:_id', update);
+router.put('invite', invite);
+//TODO "register" using a token.
 router.delete('/:_id', _delete);
 
 module.exports = router;
@@ -80,6 +82,16 @@ function getCurrent(req, res) {
 
 function update(req, res) {
     userService.update(req.params._id, req.body)
+        .then(function () {
+            res.sendStatus(200);
+        })
+        .catch(function (err) {
+            res.status(400).send(err);
+        });
+}
+
+function invite(req, res) {
+    userService.invite(req.body)
         .then(function () {
             res.sendStatus(200);
         })
