@@ -10,7 +10,7 @@ router.get('/', getAll);
 router.get('/current', getCurrent);
 router.get('/:_id', getId);
 router.put('/:_id', update);
-router.put('invite', invite);
+router.put('/invite', invite);
 //TODO "register" using a token.
 router.delete('/:_id', _delete);
 
@@ -33,7 +33,9 @@ function authenticate(req, res) {
 }
 
 function register(req, res) {
-    userService.create(req.user, req.body)
+    // NOTE: switch over to register when registration uses tokens
+    // user.Service.register(req.body)
+    userService.create(req.body)
         .then(function () {
             res.sendStatus(200);
         })
@@ -91,7 +93,7 @@ function update(req, res) {
 }
 
 function invite(req, res) {
-    userService.invite(req.body)
+    userService.invite(req.user, req.body)
         .then(function () {
             res.sendStatus(200);
         })

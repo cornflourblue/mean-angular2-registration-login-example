@@ -21,8 +21,7 @@ app.use(expressJwt({
         }
         return null;
     }
-}).unless({ path: ['/users/authenticate'] })); //TODO add reset password link to here
-// TODO Also figure out if a token sent via email can do this.
+}).unless({ path: ['/users/authenticate', '/users/register'] }));
 
 // routes
 app.use('/users', require('./controllers/users.controller'));

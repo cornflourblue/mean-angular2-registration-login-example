@@ -17,11 +17,12 @@ service.create = create;
 service.update = update;
 service.delete = _delete;
 service.invite = invite;
+service.register = register;
 
 module.exports = service;
 
-var myEmailAddr = "emailaddress@gmail.com"; // FIXME
-var myEmailPass = "this_is_a_password"; // FIXME
+var myEmailAddr = "testomnivalley@gmail.com";
+var myEmailPass = "OmniT3st";
 
 function authenticate(username, password) {
     var deferred = Q.defer();
@@ -80,30 +81,21 @@ function getById(_id) {
     return deferred.promise;
 }
 
-function create(caller, userParam) {
+// Creates a user without authenticating the creator or a token
+function create(userParam) {
     var deferred = Q.defer();
-    if (caller === null || caller === undefined || caller.sub === null || caller.sub === undefined) {
-	    deferred.reject("User is not authenticated.");
-    } else {
-        // validation
-        db.users.findById(caller.sub, function (err, userObj) {
+    db.users.findOne(
+        { username: userParam.username },
+        function (err, user) {
             if (err) deferred.reject(err.name + ': ' + err.message);
-
-            if (userObj.type != "admin") deferred.reject("Only an admin can create an account.");
-            db.users.findOne(
-                { username: userParam.username },
-                function (err, user) {
-                    if (err) deferred.reject(err.name + ': ' + err.message);
-
-                    if (user) {
-                        // username already exists
-                        deferred.reject('Username "' + userParam.username + '" is already taken');
-                    } else {
-                        createUser();
-                    }
-            });
-        });
-    }
+            if (user) {
+                // username already exists
+                deferred.reject('Username "' + userParam.username + '" is already taken');
+            } else {
+                createUser();
+            }
+        }
+    );
 
     function createUser() {
         // set user object to userParam without the cleartext password
@@ -124,25 +116,44 @@ function create(caller, userParam) {
     return deferred.promise;
 }
 
-function invite(userParam) {
+function invite(inviter, userParam) {
 	var deferred = Q.defer();
-	user = userParam;
-	if (user.email === null || user.email === undefined || user.email === "") {
-		deferred.reject("Email must be supplied for invitations");
-	} else {
-
-            db.users.findOne(
-                { email: user.email },
-                function (err, foundUser) {
-                    if (err) deferred.reject(err.name + ': ' + err.message);
-                    if (foundUser) {
-                        // username already exists
-                        deferred.reject('Email address "' + user.email + '" is already in use');
-                    } else {
-                        createUser();
-                    }
-            });
+	var user = userParam;
+	if (inviter === undefined || inviter === null || inviter.sub === undefined || inviter.sub === null ) {
+		deferred.reject("Inviter doesn't seem to be authenticated");
 	}
+
+	db.users.findById(inviter.sub, function (err, userObj) {
+	    if (err) deferred.reject(err.name + ': ' + err.message);
+	    isadmin = (userObj !== null && userObj !== undefined && userObj.type !== null
+			    && userObj.type !== undefined && userObj.type === "admin");
+	    if (isadmin) {
+//		console.log("User is admin");
+	        tryInvite();
+	    } else {
+//		console.log("User does not have permission");
+                deferred.reject("You do not have permission to delete this user.");
+	    }
+	});
+
+        function tryInvite() {
+            if (user === null || user === undefined || user.email === null
+              || user.email === undefined || user.email === "") {
+                deferred.reject("user.email must be supplied for invitations");
+            } else {
+                db.users.findOne(
+                    { email: user.email },
+                    function (err, foundUser) {
+                        if (err) deferred.reject(err.name + ': ' + err.message);
+                        if (foundUser) {
+                            // username already exists
+                            deferred.reject('Email address "' + user.email + '" is already in use');
+                        } else {
+                            createUser();
+                        }
+                });
+	    }
+        }
 
 	function createUser() {
 	    user.username = "";
@@ -172,9 +183,9 @@ function invite(userParam) {
             transporter.sendMail(mailOptions, function(error, info){
             	  if (error) {
 	              deferred.reject("Error sending email: " + error);
-//            	      console.log(error);
+            	      console.log(error);
             	  } else {
-//                      console.log('Email sent: ' + info.response);
+                      console.log('Email sent: ' + info.response);
                       deferred.resolve();
 	          }
              });
@@ -182,23 +193,23 @@ function invite(userParam) {
 	return deferred.promise;
 }
 
-function register(token, userParams) {
+// Like create() but with a token passed as a userParams field for verification
+function register(userParams) {
     var deferred = Q.defer();
     try {
-        var decodedEmail = jwt.verify(token, config.secret);
+        var decodedEmail = jwt.verify(userParams.token, config.secret);
     } catch (e) {
         deferred.reject("Bad token");
     }
-
     db.users.findOne(
-	{ email: decodedEmail, lastToken: token},
+	{ email: decodedEmail, lastToken: userParams.token},
 	function (err, user) {
 	    if (err) deferred.reject(err.name + ': ' + err.message);
 	    if (!foundUser) {
-		// username already exists
+		// Didn't find the token
 		deferred.reject("Token not found as lastToken in database for any user.");
 	    } else {
-		update(user._id, userParams).then( function(){
+		update(user._id, _.omit(userParams, 'token')).then( function(){
 			deferred.resolve();
 		}).catch(function(err) {
 			deferred.reject("Updating user failed");
@@ -293,23 +304,34 @@ function clean(obj) {
 
 function _delete(user, _id) {
     var deferred = Q.defer();
-    if (user === null || user === undefined || user.sub === null || user.sub === undefined) {
-	    deferred.reject("User is not authenticated.");
-    }
     // Authenticate calling user and remove target user
-    db.users.findById(user.sub, function (err, userObj) {
-        if (err) deferred.reject(err.name + ': ' + err.message);
-        if (user.sub === _id || userObj.type === "admin" ) {
-            db.users.remove(
-                { _id: mongo.helper.toObjectID(_id) },
-                function (err) {
-                    if (err) deferred.reject(err.name + ': ' + err.message);
-                    deferred.resolve();
-                });
-        } else {
-            deferred.reject("You do not have permission to delete this user.");
-        }
-    });
+//    console.log("User " + user.sub + " trying to delete user with _id " + _id);
+    if (user.sub === _id) {
+	    remove();
+    } else {
+	db.users.findById(user.sub, function (err, userObj) {
+	    if (err) deferred.reject(err.name + ': ' + err.message);
+	    isadmin = (userObj !== null && userObj !== undefined && userObj.type !== null
+			    && userObj.type !== undefined && userObj.type === "admin");
+	    if (isadmin) {
+//		console.log("User is admin");
+	        remove();
+	    } else {
+//		console.log("User does not have permission");
+                deferred.reject("You do not have permission to delete this user.");
+	    }
+        });
+    }
+
+    function remove() {
+        db.users.remove(
+            { _id: mongo.helper.toObjectID(_id) },
+            function (err) {
+                if (err) deferred.reject(err.name + ': ' + err.message);
+                deferred.resolve();
+            });
+    }
 
     return deferred.promise;
 }
+
