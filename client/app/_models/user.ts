@@ -60,6 +60,7 @@ export class TeamMember{
     _id: string;
     firstName: string;
     lastName: string;
+    description: string;
     linkedInURL: string;
 }
 

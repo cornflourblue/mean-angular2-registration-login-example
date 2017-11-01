@@ -48,6 +48,36 @@ h2 {
   flex: 1 1 auto;
 }
 
+.Subhead--spacious {
+    margin-top: 40px;
+}
+
+.Subtext-heading {
+  padding-bottom: 8px;
+  font-size: 18px;
+  font-weight: normal;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1 1 auto;
+  flex: 1 1 auto;
+}
+
+.member{
+  display: inline-block;
+  width: 150px;
+  margin: 10px;
+}
+
+.member_photo{
+  width:150px;
+}
+
+.member_name{
+}
+
+.member_buttons{
+
+}
+
 .navbar{
   margin-bottom: 0px;
 }
@@ -251,4 +281,8 @@ h2 {
 
 .mr-2 {
     margin-right: 8px !important;
+}
+
+label{
+  margin-top: 5px;
 }
