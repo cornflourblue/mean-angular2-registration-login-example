@@ -1,6 +1,6 @@
 ﻿import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { User, Accelerator, TeamMember} from '../_models/index';
+import { User, Cohort, Company, TeamMember} from '../_models/index';
 
 import { AlertService, UserService } from '../_services/index';
 
@@ -13,6 +13,8 @@ export class RegisterComponent {
     model: any = {};
     loading = false;
     users: User[] = [];
+    addTeamFormOpen : boolean = false;
+    addCohortFormOpen: boolean = false;
 
     constructor(
         private router: Router,
@@ -33,6 +35,39 @@ export class RegisterComponent {
                 });
     }
 
+    addCohort() {
+        if(!this.model.cohorts){
+            this.model.cohorts = Array<Cohort>();
+        }
+        let cohort = new Cohort();
+        cohort.name = this.model.input_cohort_name;
+        cohort.location = this.model.input_cohort_location;
+        cohort.date = this.model.input_cohort_date;
+        cohort.companies = Array<Company>();
+        this.model.cohorts.push(cohort);
+        this.model.input_cohort_name = this.model.input_cohort_location =
+            this.model.input_cohort_date = null;
+        this.addCohortFormOpen = false;
+    }
+
+    addCompany(cohort: any) {
+        console.log(cohort);
+        let index = this.model.cohorts.indexOf(cohort);
+        console.log(index);
+        let company = new Company();
+        company.name = cohort.input_company_name;
+        company.location = cohort.input_company_location;
+        company.date = cohort.input_company_date;
+        company.url = cohort.input_company_url;
+        company.exitValue = cohort.input_company_exit_value;
+        company.fundingTotal = cohort.input_company_funding_total;
+        this.model.cohorts[index].companies.push(company);
+        cohort.input_company_name = cohort.input_company_location = cohort.input_company_date
+            = cohort.input_company_url = cohort.input_company_exit_value
+            = cohort.input_company_funding_total = null;
+        cohort.addCompanyFormOpen = false;
+    }
+
     addTeamMember() {
         if(!this.model.team){
             this.model.team =  Array<TeamMember>();
@@ -45,17 +80,11 @@ export class RegisterComponent {
         this.model.team.push(tempMember);
         this.model.input_member_firstname = this.model.input_member_lastname =
             this.model.input_member_description = this.model.input_member_linkedInURL = null;
+        this.addTeamFormOpen = false;
     }
 
     deleteTeamMember(temp: TeamMember){
         this.model.team = this.model.team.filter((item: TeamMember) => item !== temp);
     }
 
-    deleteUser(_id: string) {
-        this.userService.delete(_id).subscribe(() => { this.loadAllUsers() });
-    }
-
-    private loadAllUsers() {
-        this.userService.getAll().subscribe(users => { this.users = users; });
-    }
 }
