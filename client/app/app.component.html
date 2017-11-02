@@ -1,5 +1,5 @@
 ﻿<div id="container">
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-default" [style.display]="!atLanding ? 'block' : 'none'">
       <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
@@ -16,6 +16,7 @@
           <ul class="nav navbar-nav navbar-right">
             <li class="nav-link"><a [routerLink]="['/adminInvite']">Invite</a></li>
             <li class="nav-link"><a [routerLink]="['/userManagement']">Users</a></li>
+            <li><a [routerLink]="['/aboutus']" id="about">About Us</a></li>
             <li class="dropdown" [style.display]="loggedIn ? 'block' : 'none'">
               <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account <span class="caret"></span></a>
               <ul class="dropdown-menu">
@@ -37,13 +38,10 @@
     </div>
 
     <!--[ footer ] -->
-    <div id="footer">
+    <div id="footer" [style.display]="!atLanding ? 'block' : 'none'">
       <div class="container">
         <p id="copyright">OmniValley LLC © 2017</p>
       </div>
     </div>
-    <div id="clear" style="clear:both;"></div>
+    <div id="clear" style="clear:both;" [style.display]="!atLanding ? 'block' : 'none'"></div>
 </div>
-
-
-<!--  -->

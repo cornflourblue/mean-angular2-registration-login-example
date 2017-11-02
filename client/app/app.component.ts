@@ -11,17 +11,17 @@ import { AuthenticationService } from './_services/index';
 
 export class AppComponent {
 
-	loggedIn : any;
+    loggedIn : any;
+    atLanding: any;
 
-
-	constructor(private auth: AuthenticationService,
-    
-            ) { }
+	constructor(private auth: AuthenticationService, private router: Router) {
+  }
 
     ngOnInit() {
         this.auth.isLoggedIn
             .subscribe(res => this.loggedIn = res);
+        this.router.events.subscribe((res) => {
+            this.atLanding = (this.router.url == "/landing");
+        })
     }
-
-
 }

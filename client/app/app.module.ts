@@ -11,13 +11,14 @@ import { AlertComponent } from './_directives/index';
 import { AuthGuard } from './_guards/index';
 import { AlertService, AuthenticationService, UserService } from './_services/index';
 import { HomeComponent } from './home/index';
+import { LandingComponent } from './landing/index';
 import { SettingsComponent, ProfileSettingsComponent, AccountSettingsComponent} from './settings/index';
 import { AccountComponent } from './account/index';
 import { LoginComponent } from './login/index';
 import { RegisterComponent, RegisterAcceleratorComponent } from './register/index';
 import { AdminInviteComponent } from './adminInvite/index';
 import { UserManagementComponent } from './userManagement/index';
-
+import { AboutUsComponent } from './aboutus/index';
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import { UserManagementComponent } from './userManagement/index';
         AppComponent,
         AlertComponent,
         HomeComponent,
+        LandingComponent,
         SettingsComponent,
         ProfileSettingsComponent,
         AccountSettingsComponent,
@@ -39,7 +41,8 @@ import { UserManagementComponent } from './userManagement/index';
         RegisterComponent,
         RegisterAcceleratorComponent,
         AdminInviteComponent,
-        UserManagementComponent
+        UserManagementComponent,
+        AboutUsComponent
     ],
     providers: [
         customHttpProvider,

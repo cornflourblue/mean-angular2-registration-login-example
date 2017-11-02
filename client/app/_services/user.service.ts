@@ -35,11 +35,4 @@ export class UserService {
         return JSON.parse(localStorage.getItem('currentUser'));
     }
 
-    // get isAdmin(): Observable<boolean>{
-    //   if(this.currentUser.type == "admin"){
-    //     this.isAdmin.next(true);
-    //   }
-    //
-    //   return this.isAdmin.asObservable();
-    // }
 }
