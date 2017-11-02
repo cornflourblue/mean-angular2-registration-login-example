@@ -1,0 +1,239 @@
+<div class="Subhead mt-0 mb-0">
+  <h2 class="Subhead-heading">Profile Information</h2>
+</div>
+<form name="form" (ngSubmit)="f.form.valid && update()" #f="ngForm" novalidate>
+  <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !orgName.valid }">
+    <label for="orgName">Organization name</label>
+    <input type="text" class="form-control" name="orgName" [(ngModel)]="currentUser.orgName" #orgName="ngModel">
+  </div>
+  <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !location.valid }">
+    <label for="location">Location</label>
+    <input type="text" class="form-control" name="location" [(ngModel)]="currentUser.location" #location="ngModel">
+  </div>
+  <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !founded.valid }">
+    <label for="founded">Founded</label>
+    <input type="text" class="form-control" name="founded" [(ngModel)]="currentUser.founded" #founded="ngModel">
+  </div>
+  <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !contactName.valid }">
+    <label for="contactName">Contact name</label>
+    <input type="text" class="form-control" name="contactName" [(ngModel)]="currentUser.contactName" #contactName="ngModel">
+  </div>
+  <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !contactTitle.valid }">
+    <label for="contactTitle">Contact title</label>
+    <input type="text" class="form-control" name="contactTitle" [(ngModel)]="currentUser.contactTitle" #contactTitle="ngModel">
+  </div>
+  <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !contactEmail.valid }">
+    <label for="contactEmail">Contact email</label>
+    <input type="text" class="form-control" name="contactEmail" [(ngModel)]="currentUser.contactEmail" #contactEmail="ngModel">
+  </div>
+  <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !contactPhone.valid }">
+    <label for="contactPhone">Contact phone</label>
+    <input type="text" class="form-control" name="contactPhone" [(ngModel)]="currentUser.contactPhone" #contactPhone="ngModel">
+  </div>
+  <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !emphasizedIndustries.valid }">
+    <label for="emphasizedIndustries">Emphasized industries</label>
+    <input type="text" class="form-control" name="emphasizedIndustries" [(ngModel)]="currentUser.emphasizedIndustries" #emphasizedIndustries="ngModel">
+  </div>
+  <!--Investor Specific Fields-->
+  <div *ngIf="currentUser.type == 'investor'">
+    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !orgType.valid }">
+      <label for="orgType">Organization type</label>
+      <input type="text" class="form-control" name="orgType" [(ngModel)]="currentUser.orgType" #orgType="ngModel">
+    </div>
+    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !affiliates.valid }">
+      <label for="affiliates">Affiliates</label>
+      <input type="text" class="form-control" name="affiliates" [(ngModel)]="currentUser.affiliates" #affiliates="ngModel">
+    </div>
+  </div>
+  <!--End Investor Specific Fields-->
+  <dt><label for="upload-logo">Logo</label></dt>
+  <dd>
+    <img height="200" width="200" src="http://eadb.org/wp-content/uploads/2015/08/profile-placeholder.jpg">
+    <div class="avatar-upload">
+      <label class="position-relative btn button-change-avatar mt-3 width-full text-center">
+        Upload new logo
+        <input type="file" class="manual-file-chooser width-full height-full ml-0 js-manual-file-chooser js-avatar-field">
+      </label>
+
+    </div>
+  </dd>
+<div class="Subhead Subhead--spacious">
+  <h2 class="Subhead-heading">Team Members</h2>
+</div>
+  <div class="team_members">
+    <div *ngFor="let members of currentUser.team" class="member">
+      <img class="member_photo" src="http://eadb.org/wp-content/uploads/2015/08/profile-placeholder.jpg"/>
+      <div class="member_name"><a href="{{members.linkedInURL}}" target="_blank">{{members.firstName}} {{members.lastName}}</a></div>
+      <div class="member_description">{{members.description}}</div>
+      <div class="member_buttons">
+        <a (click)="deleteTeamMember(members)">delete</a>
+      </div>
+
+    </div>
+  </div>
+  <label><a (click)="addTeamFormOpen = !addTeamFormOpen">+ Add Team Members</a></label>
+  <div [hidden]="!addTeamFormOpen">
+    <div class="form-group">
+      <label for="input_member_firstname">First Name</label>
+      <input type="text" class="form-control" name="input_member_firstname" [(ngModel)]="model.input_member_firstname">
+    </div>
+    <div class="form-group">
+      <label for="input_member_lastname">Last Name</label>
+      <input type="text" class="form-control" name="input_member_lastname" [(ngModel)]="model.input_member_lastname">
+    </div>
+    <div class="form-group">
+      <label for="input_member_description">Description</label>
+      <input type="text" class="form-control" name="input_member_description" [(ngModel)]="model.input_member_description">
+    </div>
+    <div class="form-group">
+      <label for="input_member_linkedInURL">LinkedIn URL</label>
+      <input type="text" class="form-control" name="input_member_linkedInURL" [(ngModel)]="model.input_member_linkedInURL">
+    </div>
+    <button [disabled]="loading" (click)="addTeamMember()" class="btn btn-primary" type="button">Add {{model.input_member_firstname}} {{model.input_member_lastname}}</button>
+  </div>
+
+  <!--ACCELERATORS-->
+  <div *ngIf="currentUser.type == 'accelerator'">
+    <div class="Subhead Subhead--spacious">
+      <h2 class="Subhead-heading">Fund Information</h2>
+    </div>
+    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !valueProp.valid }">
+      <label for="valueProp">Value proposition</label>
+      <input type="text" class="form-control" name="valueProp" [(ngModel)]="currentUser.valueProp" #valueProp="ngModel">
+    </div>
+    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !raisingCohort.valid }">
+        <input type="checkbox" name="raisingCohort" [(ngModel)]="currentUser.raisingCohort" #raisingCohort="ngModel">
+        Raising for Cohort
+    </div>
+    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !raisingGrads.valid }">
+        <input type="checkbox" name="raisingGrads" [(ngModel)]="currentUser.raisingGrads" #raisingGrads="ngModel">
+        Raising for Graduates
+    </div>
+    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !raisingOther.valid }">
+        <input type="checkbox" name="raisingOther" [(ngModel)]="currentUser.raisingOther" #raisingOther="ngModel">
+        Raising for Other
+    </div>
+  </div>
+
+  <!--INVESTORS-->
+  <div *ngIf="currentUser.type == 'investor'">
+    <div class="Subhead Subhead--spacious">
+      <h2 class="Subhead-heading">Investment Information</h2>
+    </div>
+    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !valueProp.valid }">
+      <label for="valueProp">Value proposition</label>
+      <input type="text" class="form-control" name="valueProp" [(ngModel)]="currentUser.valueProp" #valueProp="ngModel">
+    </div>
+    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !assetsUnderManagement.valid }">
+      <label for="assetsUnderManagement">Assets under management</label>
+      <input type="text" class="form-control" name="assetsUnderManagement" [(ngModel)]="currentUser.assetsUnderManagement" #assetsUnderManagement="ngModel">
+    </div>
+    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !directInvestProgram.valid }">
+        <input type="checkbox" name="directInvestProgram" [(ngModel)]="currentUser.directInvestProgram" #directInvestProgram="ngModel">
+        Direct investment program
+    </div>
+    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !coInvestProgram.valid }">
+        <input type="checkbox" name="coInvestProgram" [(ngModel)]="currentUser.coInvestProgram" #coInvestProgram="ngModel">
+        Co-investment program
+    </div>
+  </div>
+
+  <!--Investor / Accelerator Shared cohort submission form-->
+
+  <table class="cohorts table table-bordered">
+    <!-- <label>Cohorts</label> -->
+    <thead>
+      <tr>
+        <td>Cohort Name</td>
+        <td>Location</td>
+        <td>Date</td>
+      </tr>
+    </thead>
+    <tbody *ngFor="let cohort of currentUser.cohorts; let i = index;" class="cohort">
+      <tr class="bg-primary">
+        <td>{{cohort.name}}</td>
+        <td>{{cohort.location}}</td>
+        <td>{{cohort.date}}</td>
+      </tr>
+      <!-- <div>Cohort Companies</div> -->
+      <tr>
+        <td colspan="3">
+          <table class="table table-striped table-bordered table-hover">
+            <thead>
+              <tr>
+                <td>Company Name</td>
+                <td>Location</td>
+                <td>Date</td>
+                <td>Url</td>
+                <td>exitValue</td>
+                <td>fundingTotal</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let company of cohort.companies" class="company">
+                <td>{{company.name}}</td>
+                <td>{{company.location}}</td>
+                <td>{{company.date}}</td>
+                <td>{{company.url}}</td>
+                <td>{{company.exitValue}}</td>
+                <td>{{company.fundingTotal}}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <label><a (click)="cohort.addCompanyFormOpen = !cohort.addCompanyFormOpen">+ Add Company</a></label>
+            <div [hidden]="!cohort.addCompanyFormOpen">
+              <div class="form-group">
+                <label for="input_company_name">Name</label>
+                <input type="text" class="form-control" name="input_company_name" [(ngModel)]="cohort.input_company_name">
+              </div>
+              <div class="form-group">
+                <label for="input_company_location">Location</label>
+                <input type="text" class="form-control" name="input_company_location" [(ngModel)]="cohort.input_company_location">
+              </div>
+              <div class="form-group">
+                <label for="input_company_date">Date</label>
+                <input type="text" class="form-control" name="input_company_date" [(ngModel)]="cohort.input_company_date">
+              </div>
+              <div class="form-group">
+                <label for="input_company_url">URL</label>
+                <input type="text" class="form-control" name="input_company_url" [(ngModel)]="cohort.input_company_url">
+              </div>
+              <div class="form-group">
+                <label for="input_company_exit_value">Exit Value</label>
+                <input type="text" class="form-control" name="input_company_exit_value" [(ngModel)]="cohort.input_company_exit_value">
+              </div>
+              <div class="form-group">
+                <label for="input_company_funding_total">Funding Total</label>
+                <input type="text" class="form-control" name="input_company_funding_total" [(ngModel)]="cohort.input_company_funding_total">
+              </div>
+              <button [disabled]="loading" (click)="addCompany(cohort)" class="btn btn-primary" type="button">Add Company</button>
+            </div>
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+
+  <label><label><a (click)="addCohortFormOpen = !addCohortFormOpen">+ Add Cohort</a></label></label>
+  <div [hidden]="!addCohortFormOpen">
+    <div class="form-group">
+      <label for="input_cohort_name">Name</label>
+      <input type="text" class="form-control" name="input_cohort_name" [(ngModel)]="model.input_cohort_name">
+    </div>
+    <div class="form-group">
+      <label for="input_cohort_location">Location</label>
+      <input type="text" class="form-control" name="input_cohort_location" [(ngModel)]="model.input_cohort_location">
+    </div>
+    <div class="form-group">
+      <label for="input_cohort_date">Date</label>
+      <input type="text" class="form-control" name="input_cohort_date" [(ngModel)]="model.input_cohort_date">
+    </div>
+    <button [disabled]="loading" (click)="addCohort()" class="btn btn-primary" type="button">Add Cohort</button>
+  </div>
+
+  <div class="form-group">
+      <button [disabled]="loading" class="btn btn-primary" type="submit">Update profile</button>
+      <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+  </div>
+</form>

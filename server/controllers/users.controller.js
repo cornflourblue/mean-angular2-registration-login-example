@@ -5,10 +5,13 @@ var userService = require('services/user.service');
 
 // routes
 router.post('/authenticate', authenticate);
-router.post('/register', register);
+router.post('/register', register); // Really 'create'
 router.get('/', getAll);
 router.get('/current', getCurrent);
+router.get('/:_id', getId);
 router.put('/:_id', update);
+router.put('/invite', invite);
+//TODO "register" using a token.
 router.delete('/:_id', _delete);
 
 module.exports = router;
@@ -30,6 +33,8 @@ function authenticate(req, res) {
 }
 
 function register(req, res) {
+    // NOTE: switch over to register when registration uses tokens
+    // user.Service.register(req.body)
     userService.create(req.body)
         .then(function () {
             res.sendStatus(200);
@@ -43,6 +48,20 @@ function getAll(req, res) {
     userService.getAll()
         .then(function (users) {
             res.send(users);
+        })
+        .catch(function (err) {
+            res.status(400).send(err);
+        });
+}
+
+function getId(req, res) {
+    userService.getById(req.params._id)
+        .then(function (user) {
+            if (user) {
+                res.send(user);
+            } else {
+                res.sendStatus(404);
+            }
         })
         .catch(function (err) {
             res.status(400).send(err);
@@ -73,8 +92,18 @@ function update(req, res) {
         });
 }
 
+function invite(req, res) {
+    userService.invite(req.user, req.body)
+        .then(function () {
+            res.sendStatus(200);
+        })
+        .catch(function (err) {
+            res.status(400).send(err);
+        });
+}
+
 function _delete(req, res) {
-    userService.delete(req.params._id)
+    userService.delete(req.user, req.params._id)
         .then(function () {
             res.sendStatus(200);
         })

@@ -1,0 +1,39 @@
+<div class="container">
+
+
+<h1 class="header">User Management</h1>
+
+
+
+<br>
+
+<!-- Accelerator list -->
+<h3 class="header"></h3>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Username</th>
+      <th>Position</th>
+      <th>Email</th>
+      <th>Phone</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <!-- first user -->
+    <tr *ngFor="let user of users">
+        <td>{{user.username}}</td>
+        <td>{{user.contactTitle}}</td>
+        <td>{{user.contactEmail}}</td>
+        <td>{{user.contactPhone}}</td>
+        <td><button class="btn btn-danger" type="button" name="button" (click)="deleteUser(user._id);">Delete</button></td>
+    </tr>
+  </tbody>
+</table>
+
+
+</div>
+
+
+<router-outlet></router-outlet>

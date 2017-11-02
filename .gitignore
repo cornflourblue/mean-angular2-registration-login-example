@@ -23,6 +23,8 @@ coverage
 # node-waf configuration
 .lock-wscript
 
+.DS_Store
+
 # Compiled binary addons (http://nodejs.org/api/addons.html)
 build/Release
 
@@ -40,3 +42,5 @@ typings
 # Generated files
 client/app/**/*.js
 client/app/**/*.js.map
+client/package-lock.json
+server/package-lock.json

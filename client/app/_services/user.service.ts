@@ -5,6 +5,10 @@ import { User } from '../_models/index';
 
 @Injectable()
 export class UserService {
+
+    currentUser: any;
+    // isAdmin = new BehaviorSubject<boolean>(false);
+
     constructor(private http: Http) { }
 
     getAll() {
@@ -26,4 +30,9 @@ export class UserService {
     delete(_id: string) {
         return this.http.delete('/users/' + _id);
     }
+
+    getCurrentUser(){
+        return JSON.parse(localStorage.getItem('currentUser'));
+    }
+
 }

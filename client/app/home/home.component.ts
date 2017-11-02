@@ -1,6 +1,6 @@
 ﻿import { Component, OnInit } from '@angular/core';
 
-import { User } from '../_models/index';
+import { User, Investor, Accelerator } from '../_models/index';
 import { UserService } from '../_services/index';
 
 @Component({
@@ -9,8 +9,10 @@ import { UserService } from '../_services/index';
 })
 
 export class HomeComponent implements OnInit {
-    currentUser: User;
+    currentUser: any;
     users: User[] = [];
+    // isAdmin: any;
+
 
     constructor(private userService: UserService) {
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -18,6 +20,9 @@ export class HomeComponent implements OnInit {
 
     ngOnInit() {
         this.loadAllUsers();
+
+        // this.userService.isAdmin
+        //     .subscribe(res => this.isAdmin = res);
     }
 
     deleteUser(_id: string) {
