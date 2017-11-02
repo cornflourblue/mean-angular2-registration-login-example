@@ -1,7 +1,7 @@
 {
-    "name": "mean-angular2-registration-login-example-client",
+    "name": "omnivalley",
     "version": "1.0.0",
-    "description": "Client for MEAN Stack with Angular 2 User Registration and Login Example",
+    "description": "OmniValley Exclusive Investment Network",
     "repository": {
         "type": "git",
         "url": "https://github.com/cornflourblue/mean-angular2-registration-login-example.git"
