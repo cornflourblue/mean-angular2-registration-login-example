@@ -1,7 +1,10 @@
 ﻿<div class="col-md-6 col-md-offset-3">
 
     <!-- <h2 *ngIf="isAdmin(currentUser)">Administrator</h2> -->
-
+    <!-- <nav>
+      <li [style.display]="!isAdmin ? 'block' : 'none'" class="nav-link"><a [routerLink]="['/adminInvite']">Invite</a></li>
+      <li [style.display]="!isAdmin ? 'block' : 'none'" class="nav-link"><a [routerLink]="['/userManagement']">Users</a></li>
+    </nav> -->
 
     <h3>All registered users:</h3>
     <ul class="list-group">

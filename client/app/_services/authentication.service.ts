@@ -43,8 +43,4 @@ export class AuthenticationService {
         this.loggedIn.next(false);
     }
 
-    // isAdmin(){
-    //     this.currentUser = localStorage.getItem('currentUser');
-    //     return this.currentUser.type == "admin";
-    // }
-}
+  

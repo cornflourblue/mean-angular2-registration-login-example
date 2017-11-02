@@ -11,6 +11,8 @@ import { UserService } from '../_services/index';
 export class HomeComponent implements OnInit {
     currentUser: any;
     users: User[] = [];
+    // isAdmin: any;
+
 
     constructor(private userService: UserService) {
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -18,7 +20,9 @@ export class HomeComponent implements OnInit {
 
     ngOnInit() {
         this.loadAllUsers();
-        //currentUser.isAdmin();
+
+        // this.userService.isAdmin
+        //     .subscribe(res => this.isAdmin = res);
     }
 
     deleteUser(_id: string) {
@@ -29,5 +33,5 @@ export class HomeComponent implements OnInit {
         this.userService.getAll().subscribe(users => { this.users = users; });
     }
 
-  
+
 }

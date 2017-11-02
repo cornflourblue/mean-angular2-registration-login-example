@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from './_services/index';
 
+
 @Component({
     moduleId: module.id,
     selector: 'app',
@@ -12,10 +13,15 @@ export class AppComponent {
 
 	loggedIn : any;
 
-	constructor(private auth: AuthenticationService) { }
+
+	constructor(private auth: AuthenticationService,
+    
+            ) { }
 
     ngOnInit() {
         this.auth.isLoggedIn
             .subscribe(res => this.loggedIn = res);
     }
+
+
 }

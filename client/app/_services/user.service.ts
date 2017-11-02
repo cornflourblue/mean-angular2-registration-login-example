@@ -5,6 +5,10 @@ import { User } from '../_models/index';
 
 @Injectable()
 export class UserService {
+
+    currentUser: any;
+    // isAdmin = new BehaviorSubject<boolean>(false);
+
     constructor(private http: Http) { }
 
     getAll() {
@@ -30,4 +34,12 @@ export class UserService {
     getCurrentUser(){
         return JSON.parse(localStorage.getItem('currentUser'));
     }
+
+    // get isAdmin(): Observable<boolean>{
+    //   if(this.currentUser.type == "admin"){
+    //     this.isAdmin.next(true);
+    //   }
+    //
+    //   return this.isAdmin.asObservable();
+    // }
 }
