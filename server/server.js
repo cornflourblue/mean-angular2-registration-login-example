@@ -26,6 +26,15 @@ app.use(expressJwt({
 // routes
 app.use('/users', require('./controllers/users.controller'));
 
+// error handler
+app.use(function (err, req, res, next) {
+    if (err.name === 'UnauthorizedError') {
+        res.status(401).send('Invalid Token');
+    } else {
+        throw err;
+    }
+});
+
 // start server
 var port = process.env.NODE_ENV === 'production' ? 80 : 4000;
 var server = app.listen(port, function () {
