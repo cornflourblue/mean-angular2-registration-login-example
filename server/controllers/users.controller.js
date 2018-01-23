@@ -32,7 +32,7 @@ function authenticate(req, res) {
 function register(req, res) {
     userService.create(req.body)
         .then(function () {
-            res.sendStatus(200);
+            res.json('success');
         })
         .catch(function (err) {
             res.status(400).send(err);
@@ -66,7 +66,7 @@ function getCurrent(req, res) {
 function update(req, res) {
     userService.update(req.params._id, req.body)
         .then(function () {
-            res.sendStatus(200);
+            res.json('success');
         })
         .catch(function (err) {
             res.status(400).send(err);
@@ -76,7 +76,7 @@ function update(req, res) {
 function _delete(req, res) {
     userService.delete(req.params._id)
         .then(function () {
-            res.sendStatus(200);
+            res.json('success');
         })
         .catch(function (err) {
             res.status(400).send(err);
